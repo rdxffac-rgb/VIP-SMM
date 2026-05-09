@@ -11,7 +11,7 @@
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; color: #1a1a1a; }
         
         /* Premium 3D Card */
-        .premium-3d-card { background: white; border-radius: 30px; padding: 20px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border-left: 6px solid #F97316; margin-bottom: 20px; transition: 0.3s; }
+        .premium-3d-card { position: relative; background: white; border-radius: 30px; padding: 20px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border-left: 6px solid #F97316; margin-bottom: 20px; transition: 0.3s; }
         
         /* Input Styling */
         .input-3d { background: white; border-radius: 20px; border: 2px solid #f1f5f9; transition: all 0.3s ease; }
@@ -28,6 +28,10 @@
         /* Loader Animation */
         .loader { border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff; border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; display: none; margin-right: 8px; }
         @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+
+        /* Trending Blink Badge */
+        .trending-badge { position: absolute; top: -10px; right: 10px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 10px; animation: blink 0.8s infinite; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
+        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
     </style>
 </head>
 <body class="pb-10">
@@ -52,33 +56,21 @@
     <div class="px-5 mt-8 hidden" id="plansSection">
         <h2 class="text-xl font-extrabold text-gray-800 mb-6">Select Diamond Pack</h2>
         <div class="space-y-4">
+
+            <div class="premium-3d-card border-l-6 border-red-500 bg-red-50/30">
+                <div class="trending-badge">TRENDING</div>
+                <div class="flex justify-between items-start">
+                    <div>
+                        <h3 class="font-extrabold text-xl text-red-600">5000 Diamonds</h3>
+                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                    </div>
+                    <div class="text-right">
+                        <span class="text-2xl font-black text-red-600">₹999</span>
+                        <button onclick="buyNow(this, 'FF (5000 Diamonds)', 999, 'Limited Edition Trending Pack, Instant 5k Credit')" class="block mt-2 px-6 py-2 btn-3d text-sm" style="background: #ef4444; box-shadow: 0 4px 0px #991b1b;"><span>Buy Now</span></button>
+                    </div>
+                </div>
+            </div>
             
-            <div class="premium-3d-card">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-extrabold text-lg">80 Diamonds</h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-[#F97316]">₹35</span>
-                        <button onclick="buyNow(this, 'FF (80 Diamonds)', 35, 'Instant Delivery, 100% Safe, Official Topup')" class="block mt-2 px-6 py-2 btn-3d text-sm"><span>Buy</span></button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="premium-3d-card">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-extrabold text-lg">150 Diamonds</h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-[#F97316]">₹49</span>
-                        <button onclick="buyNow(this, 'FF (150 Diamonds)', 49, 'Instant Delivery, Bonus Points Included')" class="block mt-2 px-6 py-2 btn-3d text-sm"><span>Buy</span></button>
-                    </div>
-                </div>
-            </div>
-
             <div class="premium-3d-card border-l-6 border-blue-500">
                 <div class="flex justify-between items-start">
                     <div>
@@ -169,7 +161,6 @@
             const loader = document.getElementById('confirmLoader');
             const btnText = document.getElementById('btnText');
             
-            // Free Fire UID usually 9 to 12 digits
             if (uid.length >= 8 && uid.length <= 12) {
                 loader.style.display = 'block';
                 btnText.innerText = "Verifying UID...";
@@ -198,12 +189,9 @@
                 return;
             }
 
-            const span = btn.querySelector('span');
-            // Adding buffering effect
             btn.innerHTML = `<div class="border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin mr-2"></div> Processing...`;
             btn.style.pointerEvents = 'none';
 
-            // Storing data for payment.html
             localStorage.setItem('selectedPlan', plan);
             localStorage.setItem('selectedPrice', price);
             localStorage.setItem('planBenefits', benefits);
@@ -215,15 +203,19 @@
             }, 1500);
         }
 
-        // Reset buttons on page back
         window.addEventListener('pageshow', function () {
             const buttons = document.querySelectorAll('.btn-3d');
             buttons.forEach(b => {
-                if(b.innerText.includes('Processing')) b.innerHTML = '<span>Buy</span>';
+                if(b.innerText.includes('Processing')) {
+                    if(b.innerText.includes('999')) {
+                         b.innerHTML = '<span>Buy Now</span>';
+                    } else {
+                         b.innerHTML = '<span>Buy</span>';
+                    }
+                }
                 b.style.pointerEvents = 'auto';
             });
         });
     </script>
 </body>
-              </html>
-  
+</html>
