@@ -204,7 +204,7 @@
     </div>
 
     <div class="overall-rating-badge">
-        Overall Rating: 4.6 <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star-half-stroke"></i></span>
+        Overall Rating: 4.8 <span><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></span>
     </div>
     
     <div class="star-input" id="star-selector">
@@ -235,144 +235,147 @@
 </div>
 
 <script>
-    const firstNames = ["Aman", "Rohan", "Suresh", "Priya", "Sneha", "Vikram", "Anjali", "Deepak", "Manish", "Sahil", "Neha", "Aaryan", "Suhani", "Mohit", "Ishaan", "Pooja", "Arjun", "Vivek", "Karan", "Kavita"];
-    const lastNames = ["Sharma", "Verma", "Singh", "Yadav", "Gupta", "Rajput", "Meena", "Kumar", "Choudhary", "Das", "Patel", "Mishra"];
+    const firstNames = ["Aman", "Rohan", "Suresh", "Priya", "Sneha", "Vikram", "Anjali", "Deepak", "Manish", "Sahil", "Neha", "Aaryan", "Suhani", "Mohit", "Ishaan", "Pooja", "Arjun", "Vivek", "Karan", "Kavita", "Abhishek", "Rahul", "Sumit", "Riya", "Komal"];
+    const lastNames = ["Sharma", "Verma", "Singh", "Yadav", "Gupta", "Rajput", "Meena", "Kumar", "Choudhary", "Das", "Patel", "Mishra", "Joshi", "Bhatt", "Tiwari"];
     
-    const commentsPool = [
-        "Bhai mast service hai! Instagram followers instantly mil gaye.",
-        "Best SMM Panel. YouTube watchtime service non-drop hai, worth it.",
-        "Recharge process fast hai, ₹120 me Jio ka recharge mil gaya!",
-        "Amazon Prime subscription 5 min me mil gaya. Working fine.",
-        "Trustworthy site. Support team is very helpful and quick.",
-        "Facebook likes liye the, result amazing hai. Sasta aur tez!",
-        "VIP SMM is genuine. Abhi YouTube monetization pack order kiya h.",
-        "Discord nitro aur gaming services sab mast kaam kar rahi hain.",
-        "Link verify karke payment kiya, recharge turant ho gaya.",
-        "Everything is perfect. QR code se payment karna bahut easy hai.",
-        "Professional quality and timely delivery of social services.",
-        "Great experience! Link dala aur verify kiya, turant kaam ho gaya.",
-        "Netflix aur Prime ke deals insane hain yahan.",
-        "Bhai sachi me followers milte h, maine khud check kiya h.",
-        "Sabse sasti service yahan hi milti hai. 100% recommended."
+    // --- HIGH VARIETY POOL (NO REPETITION) ---
+    const positiveTemplates = [
+        "Instantly {service} mil gaye, bahut sahi site hai.",
+        "{service} ke liye best panel hai, turant kaam hota hai.",
+        "Sabse sasti {service} yahan hi milti hai, recommended!",
+        "Maza aa gaya! {service} 5 minute mein credit ho gaye.",
+        "Trustworthy site. {service} quality is non-drop.",
+        "Bhai mast service hai, {service} instantly mil gaye.",
+        "Link verify kiya aur {service} start ho gaye, amazing!",
+        "VIP SMM is real, {service} working fine.",
+        "QR code se payment kiya aur {service} turant mil gaye.",
+        "Maine {service} order kiye the, 2 minute me aa gaye.",
+        "Best for {service}, support team is very helpful.",
+        "Paisa vasool! {service} price bahut kam hai.",
+        "Finally a genuine site for {service}.",
+        "Recharge process fast hai, {service} mil gaya turant.",
+        "Professional quality services, specially for {service}."
+    ];
+
+    const services = [
+        "Instagram Followers", "YouTube Watchtime", "Jio Recharge", "Airtel Recharge",
+        "Free Fire Diamonds", "Weekly Membership", "Amazon Prime Subscription", 
+        "Play Store Redeem Code", "Facebook Likes", "Instagram Reels Views",
+        "YouTube Subscribers", "Monthly Membership", "Discord Nitro"
+    ];
+
+    const complaintTemplates = [
+        "Mera {service} aane mein 2 ghante lag gaye, thoda fast karo please.",
+        "Bhai order kiya tha par 1 ghante baad {service} mile.",
+        "Service thodi slow hai, 3 ghante baad {service} start huye.",
+        "Wait karna pada kaafi, 1.5 ghante baad {service} mile."
     ];
 
     const highRatingReplies = [
-        "Excellent! Apne doston ka recharge bhi kiya karo aise hi.",
         "Shukriya! Hum hamesha best service dene ki koshish karte hain.",
-        "Maza aa gaya sunkar! Agli baar aur bhi discount denge aapko.",
-        "Thanks for trusting VIPSMM. Keep using our services!",
-        "Aapka feedback hamare liye bahut keemti hai. Great choice!"
+        "Thanks for your feedback! Keep using VIPSMM.",
+        "Great choice! Agli baar aapko aur bhi fast delivery milegi.",
+        "Glad you liked it! Do share with your friends.",
+        "Aapka feedback hamare liye bahut keemti hai."
     ];
 
-    const lowRatingReplies = [
-        "Achha hota agar aap 5 star rating dete, hum aur bhi khush hote.",
-        "Thanks, par hum agali baar aapse 5 star ki umeed karte hain.",
-        "Feedback ke liye shukriya. Batayein hum kaise behtar ban sakte hain?",
-        "Hum apni service ko aur sudharenge taaki aap next time 5 star dein."
-    ];
+    const timesPool = ["1 hour ago", "3 hours ago", "8 hours ago", "1 day ago", "2 days ago", "4 days ago", "1 week ago", "2 weeks ago", "1 month ago"];
 
-    // --- NEW TIME POOL FOR REALISTIC HISTORY ---
-    const timesPool = [
-        "1 hour ago", "5 hours ago", "12 hours ago", 
-        "1 day ago", "3 days ago", "5 days ago", 
-        "1 week ago", "2 weeks ago", 
-        "1 month ago", "2 months ago", "5 months ago", "9 months ago",
-        "1 year ago"
-    ];
+    let usedNames = new Set();
+    let reviewCount = 0;
 
-    let usedCombinations = new Set();
-
-    function getStars() {
-        const r = Math.random() * 100;
-        let count = 5;
-        if (r < 70) count = 5;
-        else if (r < 90) count = 4;
-        else count = 3;
-        
-        let html = '';
-        for (let i = 1; i <= 5; i++) {
-            html += i <= count ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star" style="color:#cbd5e1"></i>';
-        }
-        return {html, count};
-    }
-
-    function generateUniqueReview() {
-        let name, text, time, key;
+    function getUniqueName() {
+        let name;
         do {
             name = firstNames[Math.floor(Math.random() * firstNames.length)] + " " + lastNames[Math.floor(Math.random() * lastNames.length)];
-            text = commentsPool[Math.floor(Math.random() * commentsPool.length)];
-            // SELECT RANDOM TIME FROM 1 YEAR TO 1 HOUR
-            time = timesPool[Math.floor(Math.random() * timesPool.length)];
-            key = name + text;
-        } while (usedCombinations.has(key));
+        } while (usedNames.has(name));
+        usedNames.add(name);
+        return name;
+    }
 
-        usedCombinations.add(key);
-        const starData = getStars();
+    function generateReview() {
+        reviewCount++;
+        const isComplaint = reviewCount % 15 === 0; // Har 15th review complaint hogi
         
-        let likedBadgeHTML = '';
-        if (starData.count === 5 && Math.random() < 0.05) { 
-            likedBadgeHTML = `<div class="liked-by-admin"><i class="fa-solid fa-heart"></i> Liked by VIPSMM</div>`;
-        }
+        const name = getUniqueName();
+        const time = timesPool[Math.floor(Math.random() * timesPool.length)];
+        const service = services[Math.floor(Math.random() * services.length)];
+        
+        let text, stars, replyHTML;
 
-        const shouldReply = Math.random() < 0.20; 
-        let replyHTML = '';
-        if (shouldReply) {
-            const replyText = starData.count === 5 
-                ? highRatingReplies[Math.floor(Math.random() * highRatingReplies.length)]
-                : lowRatingReplies[Math.floor(Math.random() * lowRatingReplies.length)];
-            
+        if (isComplaint) {
+            text = complaintTemplates[Math.floor(Math.random() * complaintTemplates.length)].replace("{service}", service);
+            stars = Math.random() < 0.5 ? 1 : 2;
             replyHTML = `
                 <div class="official-reply">
                     <div class="reply-header">
                         <i class="fa-solid fa-circle-check blue-tick"></i> VIPSMM OFFICIAL REPLY
                     </div>
-                    <p class="reply-text">${replyText}</p>
+                    <p class="reply-text">We sincerely apologize for the delay. Your feedback is very important to us, and we are working hard to improve our delivery speed. Thank you for your patience.</p>
                 </div>`;
+        } else {
+            text = positiveTemplates[Math.floor(Math.random() * positiveTemplates.length)].replace("{service}", service);
+            stars = 5;
+            const shouldReply = Math.random() < 0.3;
+            replyHTML = shouldReply ? `
+                <div class="official-reply">
+                    <div class="reply-header">
+                        <i class="fa-solid fa-circle-check blue-tick"></i> VIPSMM OFFICIAL REPLY
+                    </div>
+                    <p class="reply-text">${highRatingReplies[Math.floor(Math.random() * highRatingReplies.length)]}</p>
+                </div>` : '';
         }
 
-        return { name, time, text, starsHTML: starData.html, likedBadgeHTML, replyHTML, likes: Math.floor(Math.random() * 1500) + 100 };
-    }
+        let starsHTML = '';
+        for (let i = 1; i <= 5; i++) {
+            starsHTML += i <= stars ? '<i class="fa-solid fa-star"></i>' : '<i class="fa-regular fa-star" style="color:#cbd5e1"></i>';
+        }
 
-    const stars = document.querySelectorAll('.star-input i');
-    stars.forEach(s => {
-        s.addEventListener('click', () => {
-            const v = s.getAttribute('data-val');
-            stars.forEach((st, i) => st.classList.toggle('active', i < v));
-            document.getElementById('feedback-box').style.display = 'block';
-        });
-    });
+        const likes = Math.floor(Math.random() * 1200) + 50;
 
-    function handleUserRating() {
-        const n = document.getElementById('inp-name').value;
-        if(!n) return alert("Enter your name!");
-        document.getElementById('feedback-box').style.display = 'none';
-        document.getElementById('main-loader').style.display = 'block';
-        setTimeout(() => {
-            document.getElementById('main-loader').innerHTML = `<h3>✅ Thanks for rating, ${n}!</h3>`;
-            setTimeout(() => location.reload(), 2000);
-        }, 2000);
+        return { name, time, text, starsHTML, replyHTML, likes };
     }
 
     function injectReviews(n) {
         const f = document.getElementById('reviews-feed');
         for(let i=0; i<n; i++) {
-            const r = generateUniqueReview();
+            const r = generateReview();
             const div = document.createElement('div');
             div.className = 'review-card';
             div.innerHTML = `
                 <div><span class="user-name">${r.name}</span><span class="time-ago">${r.time}</span></div>
                 <div style="color:var(--star-color); font-size:10px; margin:5px 0;">${r.starsHTML}</div>
-                ${r.likedBadgeHTML}
                 <p class="review-text">${r.text}</p>
                 ${r.replyHTML}
                 <div class="actions">
-                    <span class="action-btn" onclick="this.classList.add('liked'); this.querySelector('span').innerText = ${r.likes}+1">
+                    <span class="action-btn" onclick="this.classList.add('liked');">
                         <i class="fa-solid fa-thumbs-up"></i> <span>${r.likes}</span>
                     </span>
                 </div>
             `;
             f.appendChild(div);
         }
+    }
+
+    // Star Selector UI
+    const starsUI = document.querySelectorAll('.star-input i');
+    starsUI.forEach(s => {
+        s.addEventListener('click', () => {
+            const v = s.getAttribute('data-val');
+            starsUI.forEach((st, i) => st.classList.toggle('active', i < v));
+            document.getElementById('feedback-box').style.display = 'block';
+        });
+    });
+
+    function handleUserRating() {
+        const n = document.getElementById('inp-name').value;
+        if(!n) return alert("Please enter your name!");
+        document.getElementById('feedback-box').style.display = 'none';
+        document.getElementById('main-loader').style.display = 'block';
+        setTimeout(() => {
+            document.getElementById('main-loader').innerHTML = `<h3>✅ Thank you for your feedback, ${n}!</h3>`;
+            setTimeout(() => location.reload(), 2000);
+        }, 2000);
     }
 
     function loadMoreReviews() {
@@ -382,7 +385,7 @@
             document.getElementById('more-loader').style.display = 'none';
             document.getElementById('btn-load-more').style.display = 'inline-block';
             injectReviews(5);
-        }, 1200);
+        }, 1000);
     }
 
     window.onload = () => injectReviews(10);
