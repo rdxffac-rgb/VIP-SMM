@@ -56,11 +56,6 @@
         }
 
         .plan-tag { font-size: 11px; font-weight: 700; color: #64748b; background: #f1f5f9; padding: 4px 10px; border-radius: 10px; display: inline-block; margin-top: 5px; }
-        
-        .special-offer {
-            border-left: 8px solid #ec489a;
-            background: linear-gradient(135deg, #fff 0%, #fdf2f8 100%);
-        }
     </style>
 </head>
 <body class="bg-gray-50 pb-10">
@@ -90,33 +85,6 @@
     <div class="px-5 mt-8">
         <h2 class="text-2xl font-extrabold text-gray-800 mb-6">Jio Exclusive Offers</h2>
         <div class="space-y-6">
-            
-            <!-- 🔥 ₹69 Plan (Originally ₹69, Now ₹29) - SAME FEATURES -->
-            <div class="recharge-card special-offer">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <div class="flex items-center space-x-2">
-                            <span class="bg-pink-100 text-pink-700 text-[11px] font-black px-2 py-0.5 rounded-full">🔥 Limited Offer</span>
-                            <span class="text-sm line-through text-gray-400">₹69</span>
-                            <span class="text-2xl font-black text-pink-600">₹29</span>
-                        </div>
-                        <p class="text-sm font-bold text-gray-700 mt-1">Validity: 7 Days</p>
-                        <div class="flex flex-wrap gap-2 mt-2">
-                            <span class="plan-tag">📦 6 GB Total Data</span>
-                            <span class="plan-tag">🔇 No Voice</span>
-                            <span class="plan-tag">📨 No SMS</span>
-                            <span class="plan-tag">⚡ Data Only Pack</span>
-                        </div>
-                    </div>
-                    <div onclick="openInfoSpecial()" class="info-btn"><i class="fa-solid fa-info text-xs"></i></div>
-                </div>
-                <div class="mt-6 flex justify-end">
-                    <button onclick="startRecharge(this, 'Jio ₹69 Data Pack (Special ₹29)', 29, '🔥 Special Offer: Original ₹69 pack now at ₹29! | Validity: 7 Days | Data: 6 GB Total | Voice: NA | SMS: NA | Data Only Pack - No Voice, No SMS')" class="btn-3d" style="background: linear-gradient(180deg, #EC489A 0%, #BE185D 100%); box-shadow: 0 5px 0px #831843;">
-                        <div class="loader"></div>
-                        <span>Recharge ₹29</span>
-                    </button>
-                </div>
-            </div>
 
             <!-- Jio ₹120 Plan (Originally ₹349, Now ₹120) -->
             <div class="recharge-card border-l-8 border-indigo-600">
@@ -194,22 +162,6 @@
         </div>
     </div>
 
-    <div id="infoModalSpecial">
-        <div class="modal-content">
-            <button onclick="closeInfoSpecial()" class="absolute top-4 right-4 text-gray-400 text-xl"><i class="fa-solid fa-circle-xmark"></i></button>
-            <h3 class="text-xl font-black text-gray-900 mb-2">🔥 Special ₹29 Offer</h3>
-            <ul class="text-sm text-gray-700 space-y-2 list-disc pl-4">
-                <li>💰 <strong>Original Price:</strong> ₹69</li>
-                <li>🎉 <strong>Offer Price:</strong> ₹29 only!</li>
-                <li>📦 <strong>Data:</strong> 6 GB Total</li>
-                <li>📅 <strong>Validity:</strong> 7 Days</li>
-                <li>🔇 <strong>Voice:</strong> Not Available</li>
-                <li>📨 <strong>SMS:</strong> Not Available</li>
-                <li>⚡ <strong>Type:</strong> Data Only Pack</li>
-            </ul>
-        </div>
-    </div>
-
     <script>
         let isConfirmed = false;
 
@@ -266,9 +218,6 @@
 
         function openInfo() { document.getElementById('infoModal').style.display = 'flex'; }
         function closeInfo() { document.getElementById('infoModal').style.display = 'none'; }
-
-        function openInfoSpecial() { document.getElementById('infoModalSpecial').style.display = 'flex'; }
-        function closeInfoSpecial() { document.getElementById('infoModalSpecial').style.display = 'none'; }
         
         window.onload = () => { 
             localStorage.removeItem('jioTarget');
