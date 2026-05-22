@@ -14,7 +14,7 @@
         .input-3d { background: white; border-radius: 20px; border: 2px solid #f1f5f9; transition: all 0.3s ease; }
         .input-3d:focus { border-color: #34A853; box-shadow: 0 0 0 4px rgba(52, 168, 83, 0.1); outline: none; }
         
-        .error-shake { border-color: #ef4444 !important; animation: shake 0.2s ease-in-out 2; }
+        .error-shake { border-color: #ef4444 !important; animation: shake 0.2s ease-in-out 2; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
         
         .btn-3d { background: linear-gradient(180deg, #34A853 0%, #2D8E47 100%); color: white; border-radius: 16px; font-weight: 700; box-shadow: 0 4px 0px #1B5E20; transition: all 0.1s ease; display: flex; align-items: center; justify-content: center; }
@@ -50,7 +50,7 @@
                 <h3 class="font-extrabold text-blue-700 mb-4">Custom Redeem Code</h3>
                 <div class="relative">
                     <span class="absolute left-4 top-4 font-bold text-gray-500">₹</span>
-                    <input type="number" id="customAmount" placeholder="Enter Amount (50 - 5000)" class="w-full p-4 pl-10 input-3d" oninput="calculateRedeem()">
+                    <input type="number" id="customAmount" placeholder="Enter Amount (79 - 5000)" class="w-full p-4 pl-10 input-3d" oninput="calculateRedeem()">
                 </div>
                 <div class="mt-4 p-4 bg-white rounded-2xl border border-blue-100 flex justify-between items-center shadow-sm">
                     <span class="text-sm font-bold text-gray-500">You will get:</span>
@@ -63,19 +63,6 @@
         <div class="px-5 mt-8">
             <h2 class="text-xl font-extrabold text-gray-800 mb-6">Best Offers for You</h2>
             <div class="space-y-4">
-                
-                <div class="premium-3d-card">
-                    <div class="flex justify-between items-start">
-                        <div>
-                            <h3 class="font-extrabold text-lg">₹100 Redeem Code</h3>
-                            <p class="text-xs text-gray-500">Delivery: 0.001 Sec Instantly</p>
-                        </div>
-                        <div class="text-right">
-                            <span class="text-2xl font-black text-[#34A853]">₹50</span>
-                            <button onclick="buyNow(this, 'Redeem Code (₹100)', 50, '₹100 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-3d text-sm">Buy</button>
-                        </div>
-                    </div>
-                </div>
 
                 <div class="premium-3d-card">
                     <div class="flex justify-between items-start">
@@ -163,21 +150,49 @@
             }
         }
 
+        function triggerError() {
+            const inputField = document.getElementById('customAmount');
+            inputField.classList.add('error-shake');
+            if (navigator.vibrate) {
+                navigator.vibrate(200); // Phone vibrate effect
+            }
+            setTimeout(() => {
+                inputField.classList.remove('error-shake');
+            }, 500);
+        }
+
         function calculateRedeem() {
-            const amount = parseFloat(document.getElementById('customAmount').value);
+            const inputField = document.getElementById('customAmount');
+            let amount = parseFloat(inputField.value);
             const display = document.getElementById('redeemResult');
             
-            if (isNaN(amount) || amount < 50) {
+            if (isNaN(amount)) {
                 display.innerText = "₹0 Redeem Code";
                 calculatedRedeemValue = 0;
                 return;
             }
 
-            // Calculations based on 429 -> 1200 ratio (Approx 2.8x)
-            // Matching your exact offers:
-            // 50 -> 100, 199 -> 500, 429 -> 1200
+            // Max limit checking logic
+            if (amount > 5000) {
+                triggerError();
+                inputField.value = 5000;
+                amount = 5000;
+            }
+
+            // Min limit checking logic for box validation state
+            if (amount < 79) {
+                inputField.style.borderColor = '#ef4444'; // Red Box border if less than 79
+                // User requirement: 79 me 150 ka code
+                calculatedRedeemValue = 150;
+                display.innerText = "₹" + calculatedRedeemValue + " Redeem Code";
+                return;
+            } else {
+                inputField.style.borderColor = ''; // Reset border if normal
+            }
+
+            // Calculations matching standard ratios
             let ratio = 2.8; 
-            if(amount <= 50) ratio = 2;
+            if(amount <= 79) ratio = 1.9; // 79 * 1.9 ≈ 150
             else if(amount <= 199) ratio = 2.5;
             
             calculatedRedeemValue = Math.floor(amount * ratio);
@@ -195,9 +210,10 @@
             let finalPrice = price;
             let finalPlan = plan;
             if(price === 'custom') {
-                finalPrice = document.getElementById('customAmount').value;
-                if(!finalPrice || finalPrice < 50 || finalPrice > 5000) {
-                    alert("Please enter amount between 50 and 5000");
+                finalPrice = parseFloat(document.getElementById('customAmount').value);
+                if(!finalPrice || finalPrice < 79 || finalPrice > 5000) {
+                    triggerError();
+                    document.getElementById('customAmount').style.borderColor = '#ef4444';
                     return;
                 }
                 finalPlan = `Custom Redeem (₹${calculatedRedeemValue})`;
@@ -218,8 +234,8 @@
 
         window.addEventListener('pageshow', function () {
             document.querySelectorAll('.btn-3d').forEach(b => {
-                if(b.innerText.includes('Processing')) {
-                    b.innerHTML = b.innerText.includes('Custom') ? 'Buy Custom' : 'Buy';
+                if(b.innerHTML.includes('Processing')) {
+                    b.innerHTML = b.getAttribute('onclick').includes('custom') ? 'Buy Custom' : 'Buy';
                 }
                 b.style.pointerEvents = 'auto';
             });
