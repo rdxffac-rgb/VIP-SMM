@@ -143,14 +143,24 @@
     <script>
         let isConfirmed = false;
         function verifyLink() {
-            const link = document.getElementById('instaLink').value;
+            let link = document.getElementById('instaLink').value.trim();
             const loader = document.getElementById('confirmLoader');
             const btnText = document.getElementById('btnText');
+            
             if (link.includes('instagram.com')) {
                 loader.style.display = 'block';
                 btnText.innerText = "Verifying...";
-                const parts = link.split('/');
-                const username = parts[3] || "User";
+                
+                // Advance URL logic jo kisi bhi type ki insta link se correct username nikalega
+                let cleanLink = link.replace(/^(https?:\/\/)?(www\.)?instagram\.com\//, '');
+                let parts = cleanLink.split('/');
+                let username = parts[0] || "User";
+                
+                // Agar username ke sath query parameters (?igsh=...) hon toh unhe hatane ke liye
+                if (username.includes('?')) {
+                    username = username.split('?')[0];
+                }
+
                 setTimeout(() => {
                     loader.style.display = 'none';
                     btnText.innerText = "Verified: @" + username;
