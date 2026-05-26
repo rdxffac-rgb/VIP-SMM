@@ -116,6 +116,7 @@
     </div>
 
     <script>
+        // URL .html clean up script
         (function() {
             const path = window.location.pathname;
             if (path.endsWith('.html')) {
@@ -124,33 +125,49 @@
             }
         })();
 
-        document.getElementById('txnId').innerText = "TXN" + Math.floor(Math.random() * 9999999999);
+        // Global variable taaki button click access kar sake
+        let upiUrl = "";
 
-        const plan = localStorage.getItem('selectedPlan') || "Premium Service";
-        const price = localStorage.getItem('selectedPrice') || "0";
-        const target = localStorage.getItem('finalTarget') || "Verify ID";
-        const benefits = localStorage.getItem('planBenefits');
+        // Jab poora HTML parse ho jaye tabhi ye script run kare
+        window.onload = function() {
+            document.getElementById('txnId').innerText = "TXN" + Math.floor(Math.random() * 9999999999);
 
-        document.getElementById('finalPlan').innerText = plan;
-        document.getElementById('finalTarget').innerText = target;
-        document.getElementById('finalPrice').innerText = "₹" + price;
+            const plan = localStorage.getItem('selectedPlan') || "Premium Service";
+            const price = localStorage.getItem('selectedPrice') || "0";
+            const target = localStorage.getItem('finalTarget') || "Verify ID";
+            const benefits = localStorage.getItem('planBenefits');
 
-        if(benefits) {
-            document.getElementById('benefitBox').classList.remove('hidden');
-            document.getElementById('displayBenefits').innerText = benefits;
+            document.getElementById('finalPlan').innerText = plan;
+            document.getElementById('finalTarget').innerText = target;
+            document.getElementById('finalPrice').innerText = "₹" + price;
+
+            if(benefits) {
+                document.getElementById('benefitBox').classList.remove('hidden');
+                document.getElementById('displayBenefits').innerText = benefits;
+            }
+
+            const myUpi = "vipsmm.sho@ptyes";
+            const paymentNote = encodeURIComponent(`Payment for ${plan} - Target: ${target}`);
+            upiUrl = `upi://pay?pa=${myUpi}&pn=VipSmm&am=${price}&cu=INR&tn=${paymentNote}`;
+
+            // Clear any old elements just in case
+            document.getElementById("qrcode").innerHTML = "";
+
+            new QRCode(document.getElementById("qrcode"), {
+                text: upiUrl,
+                width: 170, height: 170, 
+                colorDark : "#111827", colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        };
+
+        function openUpiApp() { 
+            if(upiUrl !== "") {
+                window.location.href = upiUrl; 
+            } else {
+                alert("Payment details loading, please wait a second.");
+            }
         }
-
-        const myUpi = "vipsmm.sho@ptyes";
-        const paymentNote = encodeURIComponent(`Payment for ${plan} - Target: ${target}`);
-        const upiUrl = `upi://pay?pa=${myUpi}&pn=VipSmm&am=${price}&cu=INR&tn=${paymentNote}`;
-
-        new QRCode(document.getElementById("qrcode"), {
-            text: upiUrl,
-            width: 170, height: 170, colorDark : "#111827", colorLight : "#ffffff",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-
-        function openUpiApp() { window.location.href = upiUrl; }
     </script>
 </body>
 </html>
