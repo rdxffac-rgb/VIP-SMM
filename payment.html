@@ -32,9 +32,10 @@
 
         .btn-pay-now:active { transform: translateY(4px); box-shadow: 0 2px 0px #3730A3; }
 
+        /* Fix for Long Links */
         .billing-item { 
             display: flex; 
-            flex-direction: column; 
+            flex-direction: column; /* Stacked labels and values */
             padding: 14px 0; 
             border-bottom: 1px dashed #e2e8f0; 
         }
@@ -42,7 +43,7 @@
         .item-label { color: #64748b; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
         .item-value { 
             color: #1e293b; font-weight: 800; font-size: 15px; 
-            word-break: break-all; 
+            word-break: break-all; /* Breaks long links into new lines */
             line-height: 1.4;
         }
 
@@ -115,7 +116,6 @@
     </div>
 
     <script>
-        // Clean URL extension (.html)
         (function() {
             const path = window.location.pathname;
             if (path.endsWith('.html')) {
@@ -124,20 +124,19 @@
             }
         })();
 
-        // Global UPI string
-        var globalUpiUrl = "";
+        // Global variable declaration to fix compiler error
+        var upiUrl = "";
 
-        // Run functions after content is safe and loaded
         document.addEventListener('DOMContentLoaded', function() {
-            var txElement = document.getElementById('txnId');
-            if(txElement) {
-                txElement.innerText = "TXN" + Math.floor(Math.random() * 9999999999);
+            var txnElement = document.getElementById('txnId');
+            if(txnElement) {
+                txnElement.innerText = "TXN" + Math.floor(Math.random() * 9999999999);
             }
 
-            var plan = localStorage.getItem('selectedPlan') || "Premium Service";
-            var price = localStorage.getItem('selectedPrice') || "0";
-            var target = localStorage.getItem('finalTarget') || "Verify ID";
-            var benefits = localStorage.getItem('planBenefits');
+            const plan = localStorage.getItem('selectedPlan') || "Premium Service";
+            const price = localStorage.getItem('selectedPrice') || "0";
+            const target = localStorage.getItem('finalTarget') || "Verify ID";
+            const benefits = localStorage.getItem('planBenefits');
 
             if(document.getElementById('finalPlan')) document.getElementById('finalPlan').innerText = plan;
             if(document.getElementById('finalTarget')) document.getElementById('finalTarget').innerText = target;
@@ -148,29 +147,24 @@
                 document.getElementById('displayBenefits').innerText = benefits;
             }
 
-            var myUpi = "vipsmm.sho@ptyes";
-            var paymentNote = encodeURIComponent("Payment for " + plan + " - Target: " + target);
-            globalUpiUrl = "upi://pay?pa=" + myUpi + "&pn=VipSmm&am=" + price + "&cu=INR&tn=" + paymentNote;
+            const myUpi = "vipsmm.sho@ptyes";
+            const paymentNote = encodeURIComponent("Payment for " + plan + " - Target: " + target);
+            upiUrl = "upi://pay?pa=" + myUpi + "&pn=VipSmm&am=" + price + "&cu=INR&tn=" + paymentNote;
 
-            var qrElement = document.getElementById("qrcode");
-            if(qrElement) {
-                qrElement.innerHTML = "";
-                new QRCode(qrElement, {
-                    text: globalUpiUrl,
-                    width: 170,
-                    height: 170,
-                    colorDark : "#111827",
-                    colorLight : "#ffffff",
+            var qrBox = document.getElementById("qrcode");
+            if(qrBox) {
+                qrBox.innerHTML = "";
+                new QRCode(qrBox, {
+                    text: upiUrl,
+                    width: 170, height: 170, colorDark : "#111827", colorLight : "#ffffff",
                     correctLevel : QRCode.CorrectLevel.H
                 });
             }
         });
 
-        function openUpiApp() {
-            if(globalUpiUrl !== "") {
-                window.location.href = globalUpiUrl;
-            } else {
-                alert("Loading payment gateway... Please wait a second.");
+        function openUpiApp() { 
+            if(upiUrl !== "") {
+                window.location.href = upiUrl; 
             }
         }
     </script>
