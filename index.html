@@ -98,37 +98,6 @@
             box-shadow: 0 2px 0px #3730A3;
         }
 
-        /* Banner Specific 3D Buttons */
-        .banner-3d-button {
-            background: linear-gradient(180deg, #22c55e 0%, #16a34a 100%);
-            color: white;
-            padding: 12px 28px;
-            border-radius: 16px;
-            font-weight: 800;
-            box-shadow: 0 4px 0px #14532d;
-            cursor: pointer;
-            transition: all 0.1s;
-        }
-        .banner-3d-button:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0px #14532d;
-        }
-
-        .confirm-3d-button {
-            background: linear-gradient(180deg, #f59e0b 0%, #d97706 100%);
-            color: white;
-            padding: 10px 20px;
-            border-radius: 12px;
-            font-weight: 700;
-            box-shadow: 0 3px 0px #78350f;
-            cursor: pointer;
-            transition: all 0.1s;
-        }
-        .confirm-3d-button:active {
-            transform: translateY(2px);
-            box-shadow: 0 1px 0px #78350f;
-        }
-
         /* --- LOADING SPINNER STYLE --- */
         .btn-loader {
             width: 18px;
@@ -141,7 +110,7 @@
         }
 
         @keyframes rotation {
-            0 { transform: rotate(0deg); }
+            0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
 
@@ -228,65 +197,6 @@
             <span class="font-bold text-rose-800 text-sm">Watch Tutorial</span>
         </div>
     </div>
-
-    <!-- --- SPECIAL OFFER BANNER SECTION (WATCH TUTORIAL OR OFFERS KE BEECH) --- -->
-    <div class="px-5 mt-8">
-        <div class="relative overflow-hidden rounded-[2.5rem] bg-gradient-to-br from-slate-900 via-indigo-950 to-slate-900 p-6 shadow-xl border border-indigo-500/20">
-            <!-- Background Graphic Elements -->
-            <div class="absolute -right-10 -top-10 w-40 h-40 bg-indigo-500/10 rounded-full blur-2xl"></div>
-            <div class="absolute -left-10 -bottom-10 w-40 h-40 bg-emerald-500/10 rounded-full blur-2xl"></div>
-            
-            <div class="relative z-10">
-                <div class="flex items-center justify-between mb-4">
-                    <span class="bg-gradient-to-r from-amber-500 to-orange-500 text-white text-xs font-black px-3 py-1.5 rounded-full uppercase tracking-wider shadow-sm animate-pulse">
-                        <i class="fa-solid fa-bolt mr-1"></i> Special Flash Sale
-                    </span>
-                    <span class="text-emerald-400 font-extrabold text-sm flex items-center">
-                        <span class="w-2 h-2 bg-emerald-400 rounded-full mr-2 animate-ping"></span> Active Offer
-                    </span>
-                </div>
-
-                <h2 class="text-xl font-black text-white leading-tight tracking-tight">
-                    Get <span class="text-transparent bg-clip-text bg-gradient-to-r from-yellow-400 to-amber-300">₹3000 Google Play Redeem Code</span>
-                </h2>
-                <p class="text-xs text-slate-400 mt-1 font-semibold">Instant Code Delivery directly to your verified Email Address</p>
-
-                <div class="flex items-baseline mt-4 mb-5">
-                    <span class="text-3xl font-black text-white tracking-tight">₹799</span>
-                    <span class="text-xs text-slate-500 line-through ml-2 font-bold">₹3000</span>
-                    <span class="text-xs text-emerald-400 font-extrabold ml-3 bg-emerald-500/10 px-2 py-0.5 rounded-md">Save 73%</span>
-                </div>
-
-                <!-- Action Button & Interactive Form Field Area -->
-                <div id="bannerActionArea" class="space-y-4">
-                    <!-- Initial State: Buy Now Button -->
-                    <div id="initialBuyBtnContainer" class="flex justify-start">
-                        <button onclick="showEmailInput()" class="banner-3d-button flex items-center space-x-2">
-                            <span>Buy Now</span>
-                            <i class="fa-solid fa-arrow-right text-sm"></i>
-                        </button>
-                    </div>
-
-                    <!-- Interactive Form State: Hidden by Default, toggles smoothly via JS -->
-                    <div id="emailFormContainer" class="hidden border-t border-slate-800/80 pt-4 space-y-3">
-                        <label class="block text-xs font-bold text-slate-300 uppercase tracking-wider">Enter Delivery Email Address:</label>
-                        <div class="flex flex-col sm:flex-row gap-2">
-                            <div class="relative flex-1">
-                                <i class="fa-solid fa-envelope absolute left-4 top-3.5 text-slate-500"></i>
-                                <input type="email" id="targetEmailInput" placeholder="example@gmail.com" class="w-full bg-slate-950 border border-slate-800 rounded-xl py-3 pl-11 pr-4 text-white text-sm font-bold focus:outline-none focus:border-indigo-500 placeholder-slate-600 transition-colors">
-                            </div>
-                            <button onclick="processBannerPayment()" class="confirm-3d-button flex items-center justify-center space-x-2">
-                                <span>Confirm Email</span>
-                                <i class="fa-solid fa-circle-check"></i>
-                            </button>
-                        </div>
-                        <p id="emailErrorHint" class="text-[11px] text-rose-400 hidden font-semibold"><i class="fa-solid fa-triangle-exclamation mr-1"></i> Please enter a valid email address to proceed.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- --- END OF SPECIAL OFFER BANNER SECTION --- -->
 
     <div class="px-5 mt-10 space-y-5">
         <h2 class="text-2xl font-extrabold text-gray-900 mb-6">Our Services</h2>
@@ -417,4 +327,71 @@
     <script>
         const sideNav = document.getElementById('sideNav');
         const navOverlay = document.getElementById('navOverlay');
-        const customAlert = document.g
+        const customAlert = document.getElementById('customAlert');
+
+        function toggleMenu() {
+            const isOpen = sideNav.style.transform === 'translateX(0px)';
+            sideNav.style.transform = isOpen ? 'translateX(-100%)' : 'translateX(0px)';
+            navOverlay.style.opacity = isOpen ? '0' : '1';
+            navOverlay.style.pointerEvents = isOpen ? 'none' : 'auto';
+        }
+
+        navOverlay.addEventListener('click', toggleMenu);
+
+        function showOrders() {
+            toggleMenu();
+            customAlert.style.display = 'flex';
+            setTimeout(() => {
+                customAlert.style.display = 'none';
+            }, 3000);
+        }
+
+        function contactUs() {
+            window.location.href = "https://wa.me/919530004641";
+        }
+
+        function shareReferral() {
+            const message = encodeURIComponent("Check this out! I just ordered from here. You should try it too—they provide the fastest and most original followers and social services! 🚀");
+            window.location.href = `whatsapp://send?text=${message}`;
+        }
+
+        // --- LOADING & REDIRECT LOGIC ---
+        function handleRedirect(button, url) {
+            const text = button.querySelector('.btn-text');
+            const loader = button.querySelector('.btn-loader');
+
+            text.style.display = 'none';
+            loader.style.display = 'block';
+            button.style.pointerEvents = 'none';
+
+            setTimeout(() => {
+                const cleanUrl = url.replace('.html', '');
+                history.pushState(null, '', cleanUrl);
+                window.location.href = url;
+            }, 2000);
+        }
+
+        // --- FIX FOR BACK BUTTON (BUFFRING RESET) ---
+        window.addEventListener('pageshow', function (event) {
+            const buttons = document.querySelectorAll('.premium-3d-button');
+            buttons.forEach(btn => {
+                const text = btn.querySelector('.btn-text');
+                const loader = btn.querySelector('.btn-loader');
+                if (text && loader) {
+                    text.style.display = 'block';
+                    loader.style.display = 'none';
+                    btn.style.pointerEvents = 'auto';
+                }
+            });
+        });
+
+        (function() {
+            const path = window.location.pathname;
+            if (path.endsWith('.html')) {
+                const cleanPath = path.slice(0, -5);
+                window.history.replaceState(null, '', cleanPath);
+            }
+        })();
+    </script>
+</body>
+    </html>
