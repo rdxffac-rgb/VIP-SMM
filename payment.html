@@ -116,7 +116,7 @@
     </div>
 
     <script>
-        // URL .html clean up script
+        // Clean URL setup
         (function() {
             const path = window.location.pathname;
             if (path.endsWith('.html')) {
@@ -125,17 +125,17 @@
             }
         })();
 
-        // Global variable taaki button click access kar sake
-        let upiUrl = "";
+        // Global variable for button link
+        var upiUrl = "";
 
-        // Jab poora HTML parse ho jaye tabhi ye script run kare
-        window.onload = function() {
+        // Safe loader logic
+        window.addEventListener('DOMContentLoaded', function() {
             document.getElementById('txnId').innerText = "TXN" + Math.floor(Math.random() * 9999999999);
 
-            const plan = localStorage.getItem('selectedPlan') || "Premium Service";
-            const price = localStorage.getItem('selectedPrice') || "0";
-            const target = localStorage.getItem('finalTarget') || "Verify ID";
-            const benefits = localStorage.getItem('planBenefits');
+            var plan = localStorage.getItem('selectedPlan') || "Premium Service";
+            var price = localStorage.getItem('selectedPrice') || "0";
+            var target = localStorage.getItem('finalTarget') || "Verify ID";
+            var benefits = localStorage.getItem('planBenefits');
 
             document.getElementById('finalPlan').innerText = plan;
             document.getElementById('finalTarget').innerText = target;
@@ -146,26 +146,30 @@
                 document.getElementById('displayBenefits').innerText = benefits;
             }
 
-            const myUpi = "vipsmm.sho@ptyes";
-            const paymentNote = encodeURIComponent(`Payment for ${plan} - Target: ${target}`);
-            upiUrl = `upi://pay?pa=${myUpi}&pn=VipSmm&am=${price}&cu=INR&tn=${paymentNote}`;
+            var myUpi = "vipsmm.sho@ptyes";
+            var paymentNote = encodeURIComponent("Payment for " + plan + " - Target: " + target);
+            upiUrl = "upi://pay?pa=" + myUpi + "&pn=VipSmm&am=" + price + "&cu=INR&tn=" + paymentNote;
 
-            // Clear any old elements just in case
-            document.getElementById("qrcode").innerHTML = "";
-
-            new QRCode(document.getElementById("qrcode"), {
-                text: upiUrl,
-                width: 170, height: 170, 
-                colorDark : "#111827", colorLight : "#ffffff",
-                correctLevel : QRCode.CorrectLevel.H
-            });
-        };
+            // Generate QR Code safely
+            var qrContainer = document.getElementById("qrcode");
+            if(qrContainer) {
+                qrContainer.innerHTML = "";
+                new QRCode(qrContainer, {
+                    text: upiUrl,
+                    width: 170, 
+                    height: 170, 
+                    colorDark : "#111827", 
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+            }
+        });
 
         function openUpiApp() { 
             if(upiUrl !== "") {
                 window.location.href = upiUrl; 
             } else {
-                alert("Payment details loading, please wait a second.");
+                alert("Please wait, loading payment details...");
             }
         }
     </script>
