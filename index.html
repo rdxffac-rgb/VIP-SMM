@@ -245,17 +245,6 @@
             </button>
         </div>
 
-        <div class="premium-3d-card fb-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-[#1877F2] text-white"><i class="fa-brands fa-facebook-f text-2xl"></i></div>
-                <div><h3 class="font-extrabold">Facebook</h3><p class="text-xs text-gray-500">Followers & Watch-time</p></div>
-            </div>
-            <button onclick="handleRedirect(this, 'facebookplan.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
         <div class="premium-3d-card amazon-border">
             <div class="flex items-center">
                 <div class="icon-container bg-white border text-sky-600"><i class="fa-brands fa-amazon text-2xl"></i></div>
@@ -329,6 +318,7 @@
         const navOverlay = document.getElementById('navOverlay');
         const customAlert = document.getElementById('customAlert');
 
+        // Toggle Drawer Control
         function toggleMenu() {
             const isOpen = sideNav.style.transform === 'translateX(0px)';
             sideNav.style.transform = isOpen ? 'translateX(-100%)' : 'translateX(0px)';
@@ -371,7 +361,7 @@
             }, 2000);
         }
 
-        // --- FIX FOR BACK BUTTON (BUFFRING RESET) ---
+        // --- FIX FOR BACK BUTTON (BUFFERING RESET) ---
         window.addEventListener('pageshow', function (event) {
             const buttons = document.querySelectorAll('.premium-3d-button');
             buttons.forEach(btn => {
@@ -394,4 +384,4 @@
         })();
     </script>
 </body>
-    </html>
+</html>
