@@ -225,9 +225,9 @@
             }
 
             // Min limit checking logic (Must be 80 or above to show redeem code text)
-            if (amount < 80) {
+            if (amount < 100) {
                 inputField.style.borderColor = '#ef4444'; // Red Box border if less than 80
-                display.innerText = "Enter Minimum Amount ₹80";
+                display.innerText = "Enter Minimum Amount ₹100";
                 display.className = "text-sm font-bold text-red-500";
                 calculatedRedeemValue = 0;
                 return;
@@ -257,7 +257,7 @@
             let finalPlan = plan;
             if(price === 'custom') {
                 finalPrice = parseFloat(document.getElementById('customAmount').value);
-                if(!finalPrice || finalPrice < 80 || finalPrice > 5000) {
+                if(!finalPrice || finalPrice < 100 || finalPrice > 5000) {
                     triggerError();
                     document.getElementById('customAmount').style.borderColor = '#ef4444';
                     return;
