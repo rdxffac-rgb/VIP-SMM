@@ -23,19 +23,25 @@
             box-shadow: 0 10px 25px rgba(0,0,0,0.03); display: inline-block; border: 1px solid #f1f5f9;
         }
 
-        .btn-pay-now {
-            background: linear-gradient(180deg, #6366F1 0%, #4F46E5 100%);
-            color: white; border-radius: 24px; font-weight: 800;
-            box-shadow: 0 6px 0px #3730A3, 0 12px 24px rgba(79, 70, 229, 0.3);
-            transition: all 0.2s ease;
+        #qrcode img {
+            display: inline-block !important;
+            margin: 0 auto;
         }
 
-        .btn-pay-now:active { transform: translateY(4px); box-shadow: 0 2px 0px #3730A3; }
+        /* Button Disabled Styling */
+        .btn-pay-now {
+            background: #cbd5e1;
+            color: #64748b;
+            border-radius: 24px;
+            font-weight: 800;
+            box-shadow: none;
+            cursor: not-allowed !important;
+            pointer-events: none !important;
+        }
 
-        /* Fix for Long Links */
         .billing-item { 
             display: flex; 
-            flex-direction: column; /* Stacked labels and values */
+            flex-direction: column;
             padding: 14px 0; 
             border-bottom: 1px dashed #e2e8f0; 
         }
@@ -43,7 +49,7 @@
         .item-label { color: #64748b; font-size: 13px; font-weight: 600; margin-bottom: 4px; }
         .item-value { 
             color: #1e293b; font-weight: 800; font-size: 15px; 
-            word-break: break-all; /* Breaks long links into new lines */
+            word-break: break-all;
             line-height: 1.4;
         }
 
@@ -102,9 +108,10 @@
                 <p class="text-[10px] font-black text-indigo-400 mt-3 italic uppercase text-center">Safe & Instant Payment</p>
             </div>
 
-            <button onclick="openUpiApp()" class="w-full py-5 btn-pay-now text-lg mb-6 flex items-center justify-center space-x-3">
-                <i class="fa-solid fa-bolt-lightning"></i>
-                <span>Complete Payment</span>
+            <!-- Disabled Button -->
+            <button type="button" disabled class="w-full py-5 btn-pay-now text-lg mb-6 flex items-center justify-center space-x-3">
+                <i class="fa-solid fa-lock"></i>
+                <span>Complete Payment (Scan QR)</span>
             </button>
 
             <div class="text-center bg-indigo-50/50 p-4 rounded-2xl border border-indigo-100">
@@ -127,8 +134,7 @@
             }
         })();
 
-        // Global variable declaration to fix compiler error
-        var upiUrl = "j5uf18oay6@postbank";
+        var upiUrl = "";
 
         document.addEventListener('DOMContentLoaded', function() {
             var txnElement = document.getElementById('txnId');
@@ -150,7 +156,6 @@
                 document.getElementById('displayBenefits').innerText = benefits;
             }
 
-            // Updated with your new UPI IDo
             const myUpi = "Q780130667@ybl";
             const paymentNote = encodeURIComponent("Payment for " + plan + " - Target: " + target);
             upiUrl = "upi://pay?pa=" + myUpi + "&pn=VipSmm&am=" + price + "&cu=INR&tn=" + paymentNote;
@@ -160,17 +165,14 @@
                 qrBox.innerHTML = "";
                 new QRCode(qrBox, {
                     text: upiUrl,
-                    width: 170, height: 170, colorDark : "#111827", colorLight : "#ffffff",
+                    width: 170, 
+                    height: 170, 
+                    colorDark : "#111827", 
+                    colorLight : "#ffffff",
                     correctLevel : QRCode.CorrectLevel.H
                 });
             }
         });
-
-        function openopiApp() { 
-            if(upiUrl !== "") {
-                window.location.href = upiUrl; 
-            }
-        }
     </script>
 </body>
 </html>
