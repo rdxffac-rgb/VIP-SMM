@@ -134,6 +134,24 @@
             text-align: center;
             backdrop-filter: blur(5px);
         }
+
+        /* Fire Animation Button Styling */
+        .fire-btn {
+            background: linear-gradient(135deg, #ff4500 0%, #ff8c00 50%, #ff0000 100%);
+            box-shadow: 0 0 15px rgba(255, 69, 0, 0.6), 0 0 30px rgba(255, 140, 0, 0.4);
+            animation: firePulse 1.5s infinite alternate;
+        }
+
+        @keyframes firePulse {
+            0% {
+                box-shadow: 0 0 12px rgba(255, 69, 0, 0.6), 0 0 24px rgba(255, 140, 0, 0.4);
+                transform: scale(1);
+            }
+            100% {
+                box-shadow: 0 0 22px rgba(255, 69, 0, 0.9), 0 0 40px rgba(255, 140, 0, 0.7);
+                transform: scale(1.02);
+            }
+        }
     </style>
 </head>
 <body>
@@ -186,6 +204,18 @@
             <i class="fa-solid fa-bars-staggered text-gray-700 text-xl"></i>
         </button>
     </nav>
+
+    <!-- BUNDLE IMAGE & FIRE BUTTON SECTION -->
+    <div class="px-5 mt-4">
+        <a href="bundle.html" class="block rounded-[1.8rem] overflow-hidden shadow-lg border-2 border-amber-500/30 active:scale-[0.98] transition-transform">
+            <img src="bundle.jpg" alt="Scorching Seal Bundle" class="w-full h-auto object-cover block">
+        </a>
+        <a href="bundle.html" class="fire-btn mt-3 flex items-center justify-center space-x-2 py-3 px-6 rounded-2xl text-white font-black text-base tracking-wider uppercase shadow-md active:scale-95 transition-transform">
+            <i class="fa-solid fa-fire text-yellow-300 text-lg"></i>
+            <span>GET NOW</span>
+            <i class="fa-solid fa-bolt text-yellow-300 text-lg"></i>
+        </a>
+    </div>
 
     <div class="grid grid-cols-2 gap-4 px-5 mt-6">
         <div onclick="contactUs()" class="flex items-center justify-center space-x-2 bg-emerald-50 border border-emerald-100 p-4 rounded-[1.8rem] shadow-sm cursor-pointer active:scale-95">
