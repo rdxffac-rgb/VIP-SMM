@@ -203,14 +203,19 @@
                 return;
             }
 
-            // Encode data into Query Parameters
+            // Purane storage ko overwrite karke naya data set karein
+            localStorage.setItem('selectedPlan', bundleTitle);
+            localStorage.setItem('selectedPrice', bundleAmount);
+            localStorage.setItem('finalTarget', 'UID: ' + verifiedPlayerUid);
+            localStorage.removeItem('planBenefits');
+
+            // URL query parameters ke sath redirect karein
             const params = new URLSearchParams({
                 bundle: bundleTitle,
                 price: bundleAmount,
                 uid: verifiedPlayerUid
             });
 
-            // Redirect to payment.html with data
             window.location.href = `payment.html?${params.toString()}`;
         }
     </script>
