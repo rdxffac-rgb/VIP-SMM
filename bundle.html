@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scorching Seal Bundle | VipSmm</title>
+    
+    <!-- Tailwind CSS & Font Awesome -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap');
+        
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            min-height: 100vh;
+        }
+
+        /* Screen Error Border */
+        #screenBorder {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            border: 0px solid transparent;
+            z-index: 9999;
+            transition: all 0.2s ease-in-out;
+        }
+
+        .error-border-active {
+            border: 6px solid #ef4444 !important;
+            box-shadow: inset 0 0 35px rgba(239, 68, 68, 0.8), 0 0 35px rgba(239, 68, 68, 0.8);
+        }
+
+        /* Shake Animation */
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            20%, 60% { transform: translateX(-10px); }
+            40%, 80% { transform: translateX(10px); }
+        }
+
+        .shake-modal {
+            animation: shake 0.4s ease-in-out;
+        }
+
+        /* Buy Now Fire Gradient Button */
+        .buy-btn {
+            background: linear-gradient(135deg, #ff4500 0%, #ff8c00 50%, #ff0000 100%);
+            box-shadow: 0 0 20px rgba(255, 69, 0, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .buy-btn:hover {
+            box-shadow: 0 0 30px rgba(255, 69, 0, 0.9);
+            transform: translateY(-2px);
+        }
+
+        .buy-btn:active {
+            transform: scale(0.98);
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-start p-4">
+
+    <!-- Red Screen Border Indicator for Error -->
+    <div id="screenBorder"></div>
+
+    <!-- UID INPUT MODAL (Auto Pop-up) -->
+    <div id="uidModal" class="fixed inset-0 bg-black/85 backdrop-blur-md flex items-center justify-center p-4 z-50">
+        <div id="modalBox" class="bg-gray-900 border border-gray-800 p-6 rounded-3xl max-w-sm w-full shadow-2xl text-center">
+            
+            <div class="w-16 h-16 bg-orange-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-orange-500/20">
+                <i class="fa-solid fa-gamepad text-orange-500 text-3xl"></i>
+            </div>
+
+            <h3 class="text-xl font-extrabold text-white mb-1">Enter Free Fire UID</h3>
+            <p class="text-xs text-gray-400 mb-6">Enter valid player UID to proceed with purchase.</p>
+
+            <div class="text-left mb-4">
+                <label class="text-xs font-semibold text-gray-400 mb-2 block">Player UID</label>
+                <div class="relative">
+                    <input type="number" id="uidInput" placeholder="e.g. 123456789" 
+                        class="w-full bg-gray-800/80 border border-gray-700 rounded-xl px-4 py-3 text-white placeholder-gray-500 text-sm focus:outline-none focus:border-orange-500 transition-colors" />
+                    <i class="fa-solid fa-id-badge absolute right-4 top-3.5 text-gray-500"></i>
+                </div>
+                <p id="errorMsg" class="text-xs text-rose-500 mt-2 font-medium hidden">
+                    <i class="fa-solid fa-circle-exclamation mr-1"></i> Please enter a valid 8 to 11 digit UID.
+                </p>
+            </div>
+
+            <button onclick="validateUID()" class="w-full bg-orange-500 hover:bg-orange-600 text-white font-bold py-3 rounded-xl transition duration-200 active:scale-95 shadow-lg shadow-orange-500/25">
+                Verify & Continue
+            </button>
+        </div>
+    </div>
+
+    <!-- MAIN PRODUCT CONTENT (Shown after UID validation) -->
+    <main id="mainContent" class="w-full max-w-md hidden flex-col items-center pb-12 pt-4">
+
+        <!-- Top Bundle Image -->
+        <div class="w-full rounded-[2rem] overflow-hidden shadow-2xl border-2 border-amber-500/30 mb-6 bg-gray-900">
+            <img src="get1.jpg" alt="Scorching Seal Bundle" class="w-full h-auto object-cover block">
+        </div>
+
+        <!-- Verified Player Info Box -->
+        <div class="w-full bg-gray-900/90 border border-gray-800 rounded-2xl p-4 mb-5 flex items-center justify-between shadow-lg">
+            <div class="flex items-center space-x-3">
+                <div class="w-10 h-10 rounded-xl bg-orange-500/10 flex items-center justify-center border border-orange-500/20 text-orange-500">
+                    <i class="fa-solid fa-user-check text-lg"></i>
+                </div>
+                <div>
+                    <span class="text-xs text-gray-400 font-semibold block">Player UID</span>
+                    <span id="displayUid" class="text-base font-extrabold text-white tracking-wider"></span>
+                </div>
+            </div>
+            
+            <div class="flex items-center space-x-1.5 bg-emerald-500/10 border border-emerald-500/20 px-3 py-1.5 rounded-full text-emerald-400 text-xs font-bold">
+                <i class="fa-solid fa-circle-check"></i>
+                <span>Verified</span>
+            </div>
+        </div>
+
+        <!-- Bundle Summary Card -->
+        <div class="w-full bg-gray-900/70 border border-gray-800/80 rounded-2xl p-5 mb-6">
+            <div class="flex justify-between items-center pb-3 border-b border-gray-800">
+                <span class="text-sm text-gray-400">Bundle Name</span>
+                <span id="bundleName" class="text-sm font-bold text-white">Scorching Seal Bundle</span>
+            </div>
+            <div class="flex justify-between items-center pt-3">
+                <span class="text-sm text-gray-400">Total Price</span>
+                <span id="bundlePrice" class="text-xl font-extrabold text-orange-400">₹299</span>
+            </div>
+        </div>
+
+        <!-- Buy Now Button -->
+        <button onclick="goToPayment()" class="buy-btn w-full py-4 rounded-2xl text-white font-extrabold text-lg tracking-wider flex items-center justify-center space-x-2 shadow-xl">
+            <i class="fa-solid fa-bolt text-yellow-300"></i>
+            <span>BUY NOW</span>
+            <i class="fa-solid fa-arrow-right text-sm"></i>
+        </button>
+
+    </main>
+
+    <script>
+        let verifiedPlayerUid = "";
+        const bundleTitle = "Scorching Seal Bundle";
+        const bundleAmount = "299";
+
+        function validateUID() {
+            const uidInput = document.getElementById('uidInput');
+            const uidVal = uidInput.value.trim();
+            const errorMsg = document.getElementById('errorMsg');
+            const modalBox = document.getElementById('modalBox');
+            const screenBorder = document.getElementById('screenBorder');
+
+            // Free Fire UID Regex (usually 8 to 11 digits numeric)
+            const isValidUid = /^\d{8,11}$/.test(uidVal);
+
+            if (!isValidUid) {
+                // Show Error text
+                errorMsg.classList.remove('hidden');
+
+                // Vibrate Mobile Phone (400ms)
+                if (navigator.vibrate) {
+                    navigator.vibrate([200, 100, 200]);
+                }
+
+                // Shake Input Modal
+                modalBox.classList.add('shake-modal');
+                setTimeout(() => {
+                    modalBox.classList.remove('shake-modal');
+                }, 400);
+
+                // Red Border on entire screen edge
+                screenBorder.classList.add('error-border-active');
+                setTimeout(() => {
+                    screenBorder.classList.remove('error-border-active');
+                }, 1000);
+
+            } else {
+                // Success Handling
+                errorMsg.classList.add('hidden');
+                verifiedPlayerUid = uidVal;
+
+                // Close Modal
+                document.getElementById('uidModal').classList.add('hidden');
+
+                // Show Main Content
+                const mainContent = document.getElementById('mainContent');
+                mainContent.classList.remove('hidden');
+                mainContent.classList.add('flex');
+
+                // Display UID
+                document.getElementById('displayUid').innerText = verifiedPlayerUid;
+            }
+        }
+
+        function goToPayment() {
+            if (!verifiedPlayerUid) {
+                alert("Please verify UID first!");
+                return;
+            }
+
+            // Encode data into Query Parameters
+            const params = new URLSearchParams({
+                bundle: bundleTitle,
+                price: bundleAmount,
+                uid: verifiedPlayerUid
+            });
+
+            // Redirect to payment.html with data
+            window.location.href = `payment.html?${params.toString()}`;
+        }
+    </script>
+</body>
+</html>
