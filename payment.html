@@ -142,16 +142,23 @@
                 txnElement.innerText = "TXN" + Math.floor(Math.random() * 9999999999);
             }
 
-            const plan = localStorage.getItem('selectedPlan') || "Premium Service";
-            const price = localStorage.getItem('selectedPrice') || "0";
-            const target = localStorage.getItem('finalTarget') || "Verify ID";
+            // URL query parameters (from bundle.html) check karein
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlBundle = urlParams.get('bundle');
+            const urlPrice = urlParams.get('price');
+            const urlUid = urlParams.get('uid');
+
+            // Agar URL me params hain to unhe prefer karein, varna localStorage se lein
+            const plan = urlBundle || localStorage.getItem('selectedPlan') || "Premium Service";
+            const price = urlPrice || localStorage.getItem('selectedPrice') || "0";
+            const target = urlUid ? ("UID: " + urlUid) : (localStorage.getItem('finalTarget') || "Verify ID");
             const benefits = localStorage.getItem('planBenefits');
 
             if(document.getElementById('finalPlan')) document.getElementById('finalPlan').innerText = plan;
             if(document.getElementById('finalTarget')) document.getElementById('finalTarget').innerText = target;
             if(document.getElementById('finalPrice')) document.getElementById('finalPrice').innerText = "₹" + price;
 
-            if(benefits && document.getElementById('benefitBox') && document.getElementById('displayBenefits')) {
+            if(benefits && !urlBundle && document.getElementById('benefitBox') && document.getElementById('displayBenefits')) {
                 document.getElementById('benefitBox').classList.remove('hidden');
                 document.getElementById('displayBenefits').innerText = benefits;
             }
