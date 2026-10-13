@@ -7,155 +7,276 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; color: #1a1a1a; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
         
-        .premium-3d-card { background: white; border-radius: 30px; padding: 20px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border-left: 6px solid #34A853; margin-bottom: 20px; transition: 0.3s; }
-        .input-3d { background: white; border-radius: 20px; border: 2px solid #f1f5f9; transition: all 0.3s ease; }
-        .input-3d:focus { border-color: #34A853; box-shadow: 0 0 0 4px rgba(52, 168, 83, 0.1); outline: none; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #090a0f; 
+            color: #ffffff; 
+            overflow-x: hidden;
+        }
         
-        .error-shake { border-color: #ef4444 !important; animation: shake 0.2s ease-in-out 2; box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1) !important; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
-        
-        .btn-3d { background: linear-gradient(180deg, #34A853 0%, #2D8E47 100%); color: white; border-radius: 16px; font-weight: 700; box-shadow: 0 4px 0px #1B5E20; transition: all 0.1s ease; display: flex; align-items: center; justify-content: center; }
-        .btn-3d:active { transform: translateY(2px); box-shadow: 0 2px 0px #1B5E20; }
-        
-        .loader { border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff; border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; display: none; margin-right: 8px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        /* Premium Dark Cards */
+        .premium-dark-card { 
+            position: relative; 
+            background: #11131a; 
+            border-radius: 24px; 
+            padding: 20px; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            margin-bottom: 20px; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
 
-        /* Custom Styles for Trending 3D Live Card */
-        .trending-premium-card {
-            background: linear-gradient(145deg, #ffffff, #f1f5f9);
-            border-radius: 30px;
-            padding: 24px;
-            box-shadow: 0 20px 25px -5px rgba(219, 39, 119, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-left: 6px solid #db2777;
-            margin-bottom: 20px;
+        .premium-dark-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(239, 68, 68, 0.2);
+        }
+
+        .border-glow-red {
+            border-left: 5px solid #ef4444;
+            box-shadow: inset 5px 0 15px -5px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Input Styling */
+        .input-dark { 
+            background: #161922; 
+            border-radius: 18px; 
+            border: 2px solid rgba(255, 255, 255, 0.08); 
+            color: #ffffff;
+            transition: all 0.3s ease; 
+        }
+        .input-dark:focus { 
+            border-color: #ef4444; 
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); 
+            outline: none; 
+        }
+        
+        /* Error Animation */
+        .error-shake { 
+            border-color: #ef4444 !important; 
+            animation: shake 0.2s ease-in-out 2; 
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.4) !important; 
+        }
+        @keyframes shake { 
+            0%, 100% { transform: translateX(0); } 
+            25% { transform: translateX(-8px); } 
+            75% { transform: translateX(8px); } 
+        }
+        
+        /* Classic Live Glowing Button */
+        .btn-glow { 
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); 
+            color: white; 
+            border-radius: 16px; 
+            font-weight: 700; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3); 
+            transition: all 0.2s ease; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
             position: relative;
-            overflow: visible;
-            transform: translateY(0px);
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            overflow: hidden;
+            animation: btnGlowPulse 2s infinite alternate;
         }
-        .trending-premium-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 25px 30px -5px rgba(219, 39, 119, 0.15), 0 15px 15px -5px rgba(0, 0, 0, 0.06);
+
+        @keyframes btnGlowPulse {
+            0% { box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+            100% { box-shadow: 0 0 22px rgba(239, 68, 68, 0.8), 0 0 35px rgba(255, 255, 255, 0.2); }
         }
-        .blink-trending {
-            animation: scaleBlink 1.4s infinite ease-in-out;
-            box-shadow: 0 0 12px #db2777;
+
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            animation: btnShine 2.5s infinite;
         }
-        @keyframes scaleBlink {
-            0%, 100% { transform: scale(1); opacity: 1; }
-            50% { transform: scale(1.08); opacity: 0.85; }
+
+        @keyframes btnShine {
+            0% { left: -100%; }
+            50%, 100% { left: 200%; }
+        }
+
+        .btn-glow:active { 
+            transform: scale(0.97); 
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); 
+        }
+        
+        /* Loader Animation */
+        .loader { 
+            border: 3px solid rgba(255,255,255,0.3); 
+            border-top: 3px solid #fff; 
+            border-radius: 50%; 
+            width: 18px; 
+            height: 18px; 
+            animation: spin 1s linear infinite; 
+            display: none; 
+            margin-right: 8px; 
+        }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
+
+        /* Trending Blink Badge */
+        .trending-badge { 
+            position: absolute; 
+            top: -10px; 
+            right: 14px; 
+            background: #ef4444; 
+            color: white; 
+            font-size: 10px; 
+            font-weight: 800; 
+            padding: 4px 10px; 
+            border-radius: 10px; 
+            animation: blink 0.8s infinite; 
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.8); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        @keyframes blink { 
+            0% { opacity: 1; } 
+            50% { opacity: 0.3; } 
+            100% { opacity: 1; } 
         }
     </style>
 </head>
 <body class="pb-10">
 
-    <nav class="flex items-center justify-between px-6 py-5 sticky top-0 bg-white/90 backdrop-blur-md z-50 shadow-sm">
+    <!-- Header Navigation -->
+    <nav class="flex items-center justify-between px-6 py-4 sticky top-0 bg-[#090a0f]/90 backdrop-blur-md z-50 border-b border-white/5">
         <div class="flex items-center space-x-3">
-            <a href="index.html" class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i class="fa-solid fa-arrow-left text-gray-600"></i></a>
-            <span class="text-2xl font-extrabold tracking-tighter">Google <span class="text-[#34A853]">Redeem</span></span>
+            <a href="index.html" class="w-10 h-10 bg-[#151821] border border-white/10 rounded-xl flex items-center justify-center text-white active:scale-95 transition-transform">
+                <i class="fa-solid fa-arrow-left text-gray-300"></i>
+            </a>
+            <span class="text-2xl font-black tracking-tighter text-white">Google <span class="text-red-500">Redeem</span></span>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+            <i class="fa-brands fa-google-play text-red-500 text-sm"></i>
         </div>
     </nav>
 
+    <!-- Email Verification Box -->
     <div class="px-5 mt-6">
-        <div class="premium-3d-card border-none" id="verifyBox">
-            <label class="block text-sm font-bold text-gray-700 mb-3">Enter Gmail Address for Delivery</label>
-            <input type="email" id="userEmail" placeholder="example@gmail.com" class="w-full p-4 input-3d" oninput="this.classList.remove('error-shake')">
-            <button onclick="verifyEmail()" id="verifyBtn" class="w-full mt-4 p-4 btn-3d">
-                <div class="loader" id="confirmLoader"></div><span id="btnText">Verify Email</span>
+        <div class="premium-dark-card border-none" id="verifyBox">
+            <label class="block text-sm font-bold text-gray-200 mb-3 flex items-center justify-between">
+                <span>Enter Gmail Address for Delivery</span>
+                <span class="text-[11px] text-red-400 font-semibold">Instant Code Delivery</span>
+            </label>
+            <input type="email" id="userEmail" placeholder="example@gmail.com" class="w-full p-4 input-dark placeholder-gray-500 text-base font-semibold" oninput="this.classList.remove('error-shake')">
+            <button onclick="verifyEmail()" id="verifyBtn" class="w-full mt-4 p-4 btn-glow">
+                <div class="loader" id="confirmLoader"></div>
+                <span id="btnText" class="tracking-wide">Verify Email</span>
             </button>
         </div>
     </div>
 
+    <!-- Main Plans Section -->
     <div id="mainSection" class="hidden">
         
+        <!-- Custom Amount Box -->
         <div class="px-5 mt-4">
-            <div class="premium-3d-card border-l-6 border-blue-500 bg-blue-50/30">
-                <h3 class="font-extrabold text-blue-700 mb-4">Custom Redeem Code</h3>
+            <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
+                <h3 class="font-extrabold text-white mb-4 text-base flex items-center space-x-2">
+                    <span class="w-2 h-2 rounded-full bg-red-500"></span>
+                    <span>Custom Redeem Code</span>
+                </h3>
                 <div class="relative">
-                    <span class="absolute left-4 top-4 font-bold text-gray-500">₹</span>
-                    <input type="number" id="customAmount" placeholder="Enter Amount (100 - 5000)" class="w-full p-4 pl-10 input-3d" oninput="calculateRedeem()">
+                    <span class="absolute left-4 top-4 font-bold text-gray-400 text-lg">₹</span>
+                    <input type="number" id="customAmount" placeholder="Enter Amount (100 - 5000)" class="w-full p-4 pl-10 input-dark text-lg font-bold placeholder-gray-500" oninput="calculateRedeem()">
                 </div>
-                <div class="mt-4 p-4 bg-white rounded-2xl border border-blue-100 flex justify-between items-center shadow-sm">
-                    <span class="text-sm font-bold text-gray-500">You will get:</span>
-                    <span class="text-lg font-black text-blue-600" id="redeemResult">Enter Minimum Amount ₹100</span>
+                <div class="mt-4 p-4 bg-[#161922] rounded-2xl border border-white/5 flex justify-between items-center shadow-inner">
+                    <span class="text-sm font-bold text-gray-400">You will get:</span>
+                    <span class="text-base font-black text-red-500" id="redeemResult">Enter Minimum Amount ₹100</span>
                 </div>
-                <button onclick="buyNow(this, 'Custom Redeem Code', 'custom', 'Instant Delivery on Gmail')" class="w-full mt-4 p-3 btn-3d" style="background: #3B82F6; box-shadow: 0 4px 0px #1E40AF;">Buy Custom</button>
+                <button onclick="buyNow(this, 'Custom Redeem Code', 'custom', 'Instant Delivery on Gmail')" class="w-full mt-4 p-3.5 btn-glow text-sm">Buy Custom</button>
             </div>
         </div>
 
+        <!-- Preset Offers -->
         <div class="px-5 mt-8">
-            <h2 class="text-xl font-extrabold text-gray-800 mb-6">Best Offers for You</h2>
+            <div class="flex items-center space-x-3 mb-6">
+                <span class="w-1.5 h-6 bg-red-500 rounded-full inline-block"></span>
+                <h2 class="text-xl font-extrabold text-white tracking-wide">Best Offers for You</h2>
+            </div>
+            
             <div class="space-y-4">
 
-                <div class="premium-3d-card">
+                <!-- ₹200 Redeem Code -->
+                <div class="premium-dark-card border-glow-red">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-extrabold text-lg">₹200 Redeem Code</h3>
-                            <p class="text-xs text-gray-500">Delivery: 0.001 Sec Instantly</p>
+                            <h3 class="font-extrabold text-lg text-white">₹200 Redeem Code</h3>
+                            <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Sec Instantly</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-2xl font-black text-[#34A853]">₹110</span>
-                            <button onclick="buyNow(this, 'Redeem Code (₹200)', 110, '₹200 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-3d text-sm">Buy</button>
+                            <span class="text-2xl font-black text-red-500">₹110</span>
+                            <button onclick="buyNow(this, 'Redeem Code (₹200)', 110, '₹200 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">Buy</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="premium-3d-card border-l-6 border-orange-500">
+                <!-- ₹250 Redeem Code -->
+                <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-extrabold text-lg">₹250 Redeem Code <span class="text-[10px] bg-orange-100 px-2 py-0.5 rounded-full ml-2">HOT</span></h3>
-                            <p class="text-xs text-gray-500">Delivery: 0.001 Sec Instantly</p>
+                            <h3 class="font-extrabold text-lg text-white">₹250 Redeem Code <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full ml-2">HOT</span></h3>
+                            <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Sec Instantly</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-2xl font-black text-orange-600">₹150</span>
-                            <button onclick="buyNow(this, 'Redeem Code (₹250)', 150, '₹250 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-3d text-sm" style="background: #F97316; box-shadow: 0 4px 0px #9A3412;">Buy</button>
+                            <span class="text-2xl font-black text-red-500">₹150</span>
+                            <button onclick="buyNow(this, 'Redeem Code (₹250)', 150, '₹250 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">Buy</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="premium-3d-card">
+                <!-- ₹500 Redeem Code -->
+                <div class="premium-dark-card border-glow-red">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-extrabold text-lg">₹500 Redeem Code</h3>
-                            <p class="text-xs text-gray-500">Delivery: 0.001 Sec Instantly</p>
+                            <h3 class="font-extrabold text-lg text-white">₹500 Redeem Code</h3>
+                            <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Sec Instantly</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-2xl font-black text-[#34A853]">₹250</span>
-                            <button onclick="buyNow(this, 'Redeem Code (₹500)', 250, '₹500 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-3d text-sm">Buy</button>
+                            <span class="text-2xl font-black text-red-500">₹250</span>
+                            <button onclick="buyNow(this, 'Redeem Code (₹500)', 250, '₹500 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">Buy</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="premium-3d-card border-l-6 border-purple-600">
+                <!-- ₹1200 Redeem Code -->
+                <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
                     <div class="flex justify-between items-start">
                         <div>
-                            <h3 class="font-extrabold text-lg">₹1200 Redeem Code <span class="text-[10px] bg-purple-100 px-2 py-0.5 rounded-full ml-2">BEST</span></h3>
-                            <p class="text-xs text-gray-500">Delivery: 0.001 Sec Instantly</p>
+                            <h3 class="font-extrabold text-lg text-white">₹1200 Redeem Code <span class="text-[10px] bg-white text-black font-extrabold px-2 py-0.5 rounded-full ml-2">BEST</span></h3>
+                            <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Sec Instantly</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-2xl font-black text-purple-600">₹480</span>
-                            <button onclick="buyNow(this, 'Redeem Code (₹1200)', 480, '₹1200 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-3d text-sm" style="background: #9333EA; box-shadow: 0 4px 0px #581C87;">Buy</button>
+                            <span class="text-2xl font-black text-red-500">₹480</span>
+                            <button onclick="buyNow(this, 'Redeem Code (₹1200)', 480, '₹1200 Play Store Credit, Instant Delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">Buy</button>
                         </div>
                     </div>
                 </div>
 
-                <div class="trending-premium-card">
-                    <div class="absolute -top-3 right-4 blink-trending bg-gradient-to-r from-pink-600 to-rose-500 text-white text-[11px] font-black px-3 py-1 rounded-full flex items-center space-x-1 uppercase tracking-wider">
-                        <i class="fa-solid fa-fire-flame-curved text-yellow-300"></i>
-                        <span>Trending</span>
+                <!-- ₹3000 Redeem Code Trending -->
+                <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/30 to-transparent">
+                    <div class="trending-badge flex items-center space-x-1">
+                        <i class="fa-solid fa-fire text-white"></i>
+                        <span>TRENDING</span>
                     </div>
                     <div class="flex justify-between items-start mt-1">
                         <div>
-                            <h3 class="font-extrabold text-xl text-gray-900 tracking-tight">₹3000 Redeem Code</h3>
-                            <p class="text-xs text-rose-500 font-bold mt-0.5"><i class="fa-solid fa-bolt mr-1"></i> VIP Instant Box Delivery</p>
+                            <h3 class="font-extrabold text-xl text-white tracking-tight">₹3000 Redeem Code</h3>
+                            <p class="text-xs text-red-400 font-bold mt-1"><i class="fa-solid fa-bolt mr-1"></i> VIP Instant Box Delivery</p>
                             <p class="text-[11px] text-gray-400 mt-1">Delivery: 0.001 Sec Instantly</p>
                         </div>
                         <div class="text-right">
-                            <span class="text-3xl font-black text-pink-600 drop-shadow-sm">₹900</span>
-                            <button onclick="buyNow(this, 'Redeem Code (₹3000)', 900, '₹3000 Play Store Credit, Instant Delivery')" class="block mt-3 px-7 py-2.5 btn-3d text-sm tracking-wide" style="background: linear-gradient(180deg, #EC4899 0%, #DB2777 100%); box-shadow: 0 4px 0px #9D174D;">Buy</button>
+                            <span class="text-3xl font-black text-red-500 drop-shadow-sm">₹900</span>
+                            <button onclick="buyNow(this, 'Redeem Code (₹3000)', 900, '₹3000 Play Store Credit, Instant Delivery')" class="block mt-3 px-7 py-2.5 btn-glow text-sm tracking-wide">Buy</button>
                         </div>
                     </div>
                 </div>
@@ -183,7 +304,8 @@
                 setTimeout(() => {
                     loader.style.display = 'none';
                     btnText.innerText = "Verified: " + email.split('@')[0];
-                    document.getElementById('verifyBtn').style.background = "#059669"; 
+                    document.getElementById('verifyBtn').style.background = "linear-gradient(135deg, #10b981 0%, #047857 100%)"; 
+                    document.getElementById('verifyBtn').style.boxShadow = "0 0 20px rgba(16, 185, 129, 0.6)";
                     isConfirmed = true;
                     localStorage.setItem('userEmail', email);
                     document.getElementById('mainSection').classList.remove('hidden');
@@ -198,7 +320,7 @@
             const inputField = document.getElementById('customAmount');
             inputField.classList.add('error-shake');
             if (navigator.vibrate) {
-                navigator.vibrate(200); // Phone vibrate effect
+                navigator.vibrate(200);
             }
             setTimeout(() => {
                 inputField.classList.remove('error-shake');
@@ -212,7 +334,7 @@
             
             if (isNaN(amount) || inputField.value === '') {
                 display.innerText = "Enter Minimum Amount ₹80";
-                display.className = "text-sm font-bold text-red-500";
+                display.className = "text-sm font-bold text-red-400";
                 calculatedRedeemValue = 0;
                 return;
             }
@@ -224,21 +346,21 @@
                 amount = 5000;
             }
 
-            // Min limit checking logic (Must be 80 or above to show redeem code text)
+            // Min limit checking logic
             if (amount < 100) {
-                inputField.style.borderColor = '#ef4444'; // Red Box border if less than 80
+                inputField.style.borderColor = '#ef4444';
                 display.innerText = "Enter Minimum Amount ₹100";
-                display.className = "text-sm font-bold text-red-500";
+                display.className = "text-sm font-bold text-red-400";
                 calculatedRedeemValue = 0;
                 return;
             } else {
-                inputField.style.borderColor = ''; // Reset border if normal
-                display.className = "text-lg font-black text-blue-600"; // Reset classes for output
+                inputField.style.borderColor = '';
+                display.className = "text-base font-black text-red-500";
             }
 
             // Calculations matching standard ratios
             let ratio = 2.8; 
-            if(amount <= 89) ratio = 2.25; // Matching approx value range safely
+            if(amount <= 89) ratio = 2.25;
             else if(amount <= 199) ratio = 2.5;
             
             calculatedRedeemValue = Math.floor(amount * ratio);
@@ -279,9 +401,9 @@
         }
 
         window.addEventListener('pageshow', function () {
-            document.querySelectorAll('.btn-3d').forEach(b => {
+            document.querySelectorAll('.btn-glow').forEach(b => {
                 if(b.innerHTML.includes('Processing')) {
-                    if(b.getAttribute('onclick').includes('custom')) {
+                    if(b.getAttribute('onclick') && b.getAttribute('onclick').includes('custom')) {
                         b.innerHTML = 'Buy Custom';
                     } else {
                         b.innerHTML = 'Buy';
