@@ -2,10 +2,8 @@
 <html lang="en">
 <head>
     <meta name="google-site-verification" content="aHx2pnoUrtIA_TE67GcP7O6hQQNONlLeT1zc935DyW4" />
-    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
     <title>VipSmm Premium | Next-Gen Panel</title>
 
     <link rel="icon" type="image/png" href="logo.png">
@@ -17,12 +15,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
         
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #f8fafc;
-            color: #1a1a1a;
+            background: #090a0f;
+            color: #ffffff;
             overflow-x: hidden;
         }
 
@@ -41,10 +39,16 @@
             display: flex;
             align-items: center;
             padding: 16px 24px;
-            color: #4b5563;
+            color: #d1d5db;
             font-weight: 600;
-            border-bottom: 1px solid #f3f4f6;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
             cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-link:hover {
+            background: rgba(239, 68, 68, 0.1);
+            color: #ffffff;
         }
 
         .nav-link i {
@@ -54,54 +58,118 @@
             text-align: center;
         }
 
-        /* 3D Premium Card Logic */
-        .premium-3d-card {
-            background: white;
-            border-radius: 30px;
-            padding: 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), inset 0 1px 0 rgba(255, 255, 255, 0.5), inset 0 -4px 0 rgba(0, 0, 0, 0.02);
-            transition: all 0.3s ease;
+        /* --- 3D CUBE CARD WITH RUNNING LIGHT BORDER --- */
+        .cube-card-wrapper {
+            position: relative;
+            border-radius: 24px;
+            overflow: hidden;
+            padding: 2px;
+            background: rgba(255, 255, 255, 0.04);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .jio-border { border-left: 6px solid #005AFF; }
-        .airtel-border { border-left: 6px solid #E40000; }
-        .fb-border { border-left: 6px solid #1877F2; }
-        .amazon-border { border-left: 6px solid #00A8E1; }
-        .yt-border { border-left: 6px solid #FF0000; }
-        .insta-border { border-left: 6px solid #E1306C; }
-        .ff-border { border-left: 6px solid #F97316; } /* Free Fire Orange */
-        .redeem-border { border-left: 6px solid #34A853; } /* Play Store Green */
+        .cube-card-wrapper:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 30px rgba(239, 68, 68, 0.25);
+        }
 
-        /* Premium 3D Button */
-        .premium-3d-button {
-            background: linear-gradient(180deg, #6366F1 0%, #4F46E5 100%);
-            color: white;
-            padding: 10px 24px;
-            border-radius: 16px;
-            font-weight: 700;
-            box-shadow: 0 4px 0px #3730A3;
-            cursor: pointer;
-            border: none;
-            outline: none;
-            transition: transform 0.1s;
+        /* Running light beam effect */
+        .cube-card-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(
+                transparent,
+                transparent,
+                transparent,
+                #ef4444,
+                #ffffff,
+                #ef4444
+            );
+            animation: rotateBorder 3.5s linear infinite;
+            z-index: 1;
+        }
+
+        @keyframes rotateBorder {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .cube-card-content {
+            position: relative;
+            background: #11131a;
+            border-radius: 22px;
+            padding: 20px 14px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            text-align: center;
+            min-height: 220px;
+            z-index: 2;
+        }
+
+        .cube-icon {
+            width: 58px;
+            height: 58px;
+            border-radius: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            min-width: 100px;
+            margin-bottom: 12px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
 
-        .premium-3d-button:active {
-            transform: translateY(2px);
-            box-shadow: 0 2px 0px #3730A3;
+        /* Classic Live Action Button */
+        .classic-live-btn {
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%);
+            color: #ffffff;
+            padding: 9px 20px;
+            border-radius: 14px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
+            cursor: pointer;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
         }
 
-        /* --- LOADING SPINNER STYLE --- */
+        .classic-live-btn::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            animation: btnShine 2.5s infinite;
+        }
+
+        @keyframes btnShine {
+            0% { left: -100%; }
+            50%, 100% { left: 200%; }
+        }
+
+        .classic-live-btn:active {
+            transform: scale(0.96);
+            box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
+        }
+
+        /* Loading spinner */
         .btn-loader {
-            width: 18px;
-            height: 18px;
+            width: 16px;
+            height: 16px;
             border: 2px solid #ffffff;
             border-bottom-color: transparent;
             border-radius: 50%;
@@ -114,41 +182,34 @@
             100% { transform: rotate(360deg); }
         }
 
-        .icon-container {
-            width: 55px; height: 55px;
-            border-radius: 18px;
-            display: flex; align-items: center; justify-content: center;
-            margin-right: 15px;
-        }
-
-        /* Full Screen Alert Styling */
+        /* Custom Alert Popup */
         #customAlert {
             display: none;
             position: fixed;
             inset: 0;
-            background: rgba(255, 255, 255, 0.95);
+            background: rgba(0, 0, 0, 0.85);
             z-index: 200;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            backdrop-filter: blur(5px);
+            backdrop-filter: blur(8px);
         }
 
-        /* Fire Animation Button Styling */
+        /* Fire Animation Button */
         .fire-btn {
-            background: linear-gradient(135deg, #ff4500 0%, #ff8c00 50%, #ff0000 100%);
-            box-shadow: 0 0 15px rgba(255, 69, 0, 0.6), 0 0 30px rgba(255, 140, 0, 0.4);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 50%, #991b1b 100%);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.7);
             animation: firePulse 1.5s infinite alternate;
         }
 
         @keyframes firePulse {
             0% {
-                box-shadow: 0 0 12px rgba(255, 69, 0, 0.6), 0 0 24px rgba(255, 140, 0, 0.4);
+                box-shadow: 0 0 15px rgba(239, 68, 68, 0.6);
                 transform: scale(1);
             }
             100% {
-                box-shadow: 0 0 22px rgba(255, 69, 0, 0.9), 0 0 40px rgba(255, 140, 0, 0.7);
+                box-shadow: 0 0 28px rgba(255, 255, 255, 0.4), 0 0 35px rgba(239, 68, 68, 0.9);
                 transform: scale(1.02);
             }
         }
@@ -156,36 +217,41 @@
 </head>
 <body>
 
+    <!-- Full Screen Alert Modal -->
     <div id="customAlert">
-        <div class="w-20 h-20 bg-gray-100 rounded-full flex items-center justify-center mb-4">
-            <i class="fa-solid fa-box-open text-gray-400 text-4xl"></i>
+        <div class="bg-[#151821] border border-red-500/30 p-8 rounded-3xl max-w-xs mx-4 flex flex-col items-center shadow-2xl">
+            <div class="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mb-4 border border-red-500/20">
+                <i class="fa-solid fa-box-open text-red-500 text-3xl"></i>
+            </div>
+            <h2 class="text-xl font-extrabold text-white">No order available</h2>
+            <p class="text-gray-400 text-sm mt-2">Place an order and check.</p>
         </div>
-        <h2 class="text-2xl font-extrabold text-gray-800">No order available</h2>
-        <p class="text-gray-500 mt-2">Place a order and check.</p>
     </div>
 
-    <div id="navOverlay" class="fixed inset-0 bg-black/40 opacity-0 pointer-events-none transition-opacity"></div>
+    <!-- Backdrop Overlay -->
+    <div id="navOverlay" class="fixed inset-0 bg-black/70 opacity-0 pointer-events-none transition-opacity"></div>
 
-    <div id="sideNav" class="fixed top-0 left-0 h-full w-[280px] bg-white shadow-2xl translate-x-[-100%] rounded-r-[2.5rem] overflow-hidden">
-        <div class="p-8 border-b border-gray-100 flex items-center space-x-3">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center shadow-lg">
+    <!-- Side Navigation Menu -->
+    <div id="sideNav" class="fixed top-0 left-0 h-full w-[280px] bg-[#0f1118] border-r border-white/10 shadow-2xl translate-x-[-100%] rounded-r-[2rem] overflow-hidden">
+        <div class="p-7 border-b border-white/5 flex items-center space-x-3 bg-black/40">
+            <div class="w-10 h-10 bg-gradient-to-br from-red-500 to-red-700 rounded-xl flex items-center justify-center shadow-lg border border-red-400/40">
                 <span class="text-white font-extrabold text-xl">V</span>
             </div>
-            <span class="text-2xl font-black tracking-tighter">Vip<span class="text-indigo-600">Smm</span></span>
+            <span class="text-2xl font-black tracking-tight text-white">Vip<span class="text-red-500">Smm</span></span>
         </div>
 
         <nav class="mt-4">
-            <div onclick="toggleMenu()" class="nav-link text-indigo-600 bg-indigo-50/50">
+            <div onclick="toggleMenu()" class="nav-link text-red-400 bg-red-500/10 border-l-4 border-red-500">
                 <i class="fa-solid fa-house"></i> Home
             </div>
             <div onclick="showOrders()" class="nav-link">
-                <i class="fa-solid fa-box-open text-emerald-500"></i> My Orders
+                <i class="fa-solid fa-box-open text-red-400"></i> My Orders
             </div>
             <div onclick="shareReferral()" class="nav-link">
-                <i class="fa-solid fa-share-nodes text-blue-500"></i> Refer
+                <i class="fa-solid fa-share-nodes text-white"></i> Refer
             </div>
             <div onclick="contactUs()" class="nav-link">
-                <i class="fa-solid fa-phone text-rose-500"></i> Contact Us
+                <i class="fa-solid fa-phone text-red-500"></i> Contact Us
             </div>
             <a href="about.html" class="nav-link">
                 <i class="fa-solid fa-circle-info text-gray-400"></i> About
@@ -193,156 +259,204 @@
         </nav>
     </div>
 
-    <nav class="flex items-center justify-between px-6 py-5 sticky top-0 bg-white/90 backdrop-blur-sm z-40 shadow-sm">
+    <!-- Top Sticky Header -->
+    <nav class="flex items-center justify-between px-6 py-4 sticky top-0 bg-[#090a0f]/90 backdrop-blur-md z-40 border-b border-white/5">
         <div class="flex items-center space-x-3">
-            <div class="w-10 h-10 bg-indigo-600 rounded-xl flex items-center justify-center">
+            <div class="w-10 h-10 bg-gradient-to-tr from-red-600 to-red-500 rounded-xl flex items-center justify-center shadow-lg border border-red-400/40">
                 <span class="text-white font-extrabold text-2xl">V</span>
             </div>
-            <span class="text-3xl font-extrabold tracking-tighter text-gray-900">Vip<span class="text-indigo-600">Smm</span></span>
+            <span class="text-3xl font-extrabold tracking-tighter text-white">Vip<span class="text-red-500">Smm</span></span>
         </div>
-        <button onclick="toggleMenu()" class="bg-gray-100 p-3 rounded-2xl active:scale-90 transition-transform">
-            <i class="fa-solid fa-bars-staggered text-gray-700 text-xl"></i>
+        <button onclick="toggleMenu()" class="bg-[#151821] border border-white/10 p-3 rounded-2xl active:scale-90 transition-transform">
+            <i class="fa-solid fa-bars-staggered text-white text-xl"></i>
         </button>
     </nav>
 
-    <!-- BUNDLE IMAGE & FIRE BUTTON SECTION -->
+    <!-- Bundle Banner Section -->
     <div class="px-5 mt-4">
-        <a href="bundle.html" class="block rounded-[1.8rem] overflow-hidden shadow-lg border-2 border-amber-500/30 active:scale-[0.98] transition-transform">
+        <a href="bundle.html" class="block rounded-[1.8rem] overflow-hidden shadow-2xl border border-red-500/30 active:scale-[0.98] transition-transform bg-[#11131a]">
             <img src="bundle.jpg" alt="Scorching Seal Bundle" class="w-full h-auto object-cover block">
         </a>
-        <a href="bundle.html" class="fire-btn mt-3 flex items-center justify-center space-x-2 py-3 px-6 rounded-2xl text-white font-black text-base tracking-wider uppercase shadow-md active:scale-95 transition-transform">
-            <i class="fa-solid fa-fire text-yellow-300 text-lg"></i>
+        <a href="bundle.html" class="fire-btn mt-3 flex items-center justify-center space-x-2 py-3 px-6 rounded-2xl text-white font-black text-base tracking-wider uppercase active:scale-95 transition-transform border border-red-400/40">
+            <i class="fa-solid fa-fire text-white text-lg"></i>
             <span>GET NOW</span>
-            <i class="fa-solid fa-bolt text-yellow-300 text-lg"></i>
+            <i class="fa-solid fa-bolt text-white text-lg"></i>
         </a>
     </div>
 
+    <!-- Quick Help & Tutorials -->
     <div class="grid grid-cols-2 gap-4 px-5 mt-6">
-        <div onclick="contactUs()" class="flex items-center justify-center space-x-2 bg-emerald-50 border border-emerald-100 p-4 rounded-[1.8rem] shadow-sm cursor-pointer active:scale-95">
-            <i class="fa-brands fa-whatsapp text-emerald-600 text-xl"></i>
-            <span class="font-bold text-emerald-800 text-sm">24/7 Support</span>
+        <div onclick="contactUs()" class="flex items-center justify-center space-x-2 bg-[#12141c] border border-white/10 p-4 rounded-[1.5rem] shadow-sm cursor-pointer active:scale-95 transition-transform hover:border-red-500/40">
+            <i class="fa-brands fa-whatsapp text-emerald-400 text-xl"></i>
+            <span class="font-bold text-white text-sm">24/7 Support</span>
         </div>
-        <div onclick="window.location.href='retingpage.html'" class="flex items-center justify-center space-x-2 bg-rose-50 border border-rose-100 p-4 rounded-[1.8rem] shadow-sm cursor-pointer active:scale-95">
-            <i class="fa-brands fa-youtube text-rose-600 text-xl"></i>
-            <span class="font-bold text-rose-800 text-sm">Watch Tutorial</span>
-        </div>
-    </div>
-
-    <div class="px-5 mt-10 space-y-5">
-        <h2 class="text-2xl font-extrabold text-gray-900 mb-6">Our Services</h2>
-
-        <div class="premium-3d-card jio-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-[#005AFF] italic text-white font-black">Jio</div>
-                <div><h3 class="font-extrabold">Jio</h3><p class="text-xs text-gray-500">Recharge Unlimited 5G</p></div>
-            </div>
-            <button onclick="handleRedirect(this, 'jioplan.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
-        <div class="premium-3d-card airtel-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-[#E40000] text-white"><i class="fa-solid fa-tower-cell text-2xl"></i></div>
-                <div><h3 class="font-extrabold">Airtel</h3><p class="text-xs text-gray-500">Recharge Unlimited 5G & 4G</p></div>
-            </div>
-            <button onclick="handleRedirect(this, 'airtelplan.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
-        <div class="premium-3d-card insta-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 text-white"><i class="fa-brands fa-instagram text-2xl"></i></div>
-                <div><h3 class="font-extrabold">Instagram</h3><p class="text-xs text-gray-500">Followers & Likes</p></div>
-            </div>
-            <button onclick="handleRedirect(this, 'instagramplan.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
-        <div class="premium-3d-card yt-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-red-600 text-white"><i class="fa-brands fa-youtube text-2xl"></i></div>
-                <div><h3 class="font-extrabold">YouTube</h3><p class="text-xs text-gray-500">Watch-time & Subs</p></div>
-            </div>
-            <button onclick="handleRedirect(this, 'youtubeplan.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
-        <div class="premium-3d-card amazon-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-white border text-sky-600"><i class="fa-brands fa-amazon text-2xl"></i></div>
-                <div><h3 class="font-extrabold">Amazon Prime</h3><p class="text-xs text-gray-500">Monthly Membership</p></div>
-            </div>
-            <button onclick="handleRedirect(this, 'amazonprime.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
-        <div class="premium-3d-card ff-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-gradient-to-br from-orange-500 to-red-600 text-white">
-                    <i class="fa-solid fa-gamepad text-2xl"></i>
-                </div>
-                <div>
-                    <h3 class="font-extrabold">Free Fire Top-Up</h3>
-                    <p class="text-xs text-gray-500">Diamonds & Event Packs</p>
-                </div>
-            </div>
-            <button onclick="handleRedirect(this, 'freefire.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
-        <div class="premium-3d-card redeem-border">
-            <div class="flex items-center">
-                <div class="icon-container bg-white border flex flex-wrap p-2 overflow-hidden">
-                    <i class="fa-brands fa-google-play text-2xl text-emerald-500"></i>
-                </div>
-                <div>
-                    <h3 class="font-extrabold">Play Store</h3>
-                    <p class="text-xs text-gray-500">Redeem Codes & Credits</p>
-                </div>
-            </div>
-            <button onclick="handleRedirect(this, 'redeemcode.html')" class="premium-3d-button">
-                <span class="btn-text">Plans</span>
-                <span class="btn-loader"></span>
-            </button>
-        </div>
-
-    </div>
-
-    <div class="bg-[#0f172a] text-gray-400 mt-20 rounded-t-[3rem] px-6 py-12 shadow-inner">
-        <div class="flex justify-center mb-10">
-            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                <span class="text-indigo-600 font-extrabold text-3xl">V</span>
-            </div>
-            <span class="text-3xl font-extrabold text-white ml-2">Vip<span class="text-gray-500">Smm</span></span>
-        </div>
-        <div class="text-center space-y-4 max-w-2xl mx-auto border-t border-gray-800 pt-10">
-            <p class="text-white font-bold text-lg">VipSmm Global Services Private Limited</p>
-            <p class="text-sm">702, 7th Floor, Trade World - C Wing, Kamala Mills Compound, Senapati Bapat Marg, Lower Parel, Mumbai, Maharashtra - 400013.</p>
-            <p class="text-sm">CIN: U72900MH2024PTC987654 | GSTIN: 27AAVCS4321B1Z0</p>
-            <p class="text-sm">Corporate Number: +91 9530004641</p>
-        </div>
-        <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-            <div class="flex flex-wrap justify-center gap-6 mb-6 text-sm font-medium text-indigo-400">
-                <a href="#">Privacy Policy</a>
-                <a href="#">Terms of Service</a>
-                <a href="#">Refund Policy</a>
-            </div>
-            <p class="text-xs text-gray-600">© 2026 VipSmm. All Rights Reserved.</p>
+        <div onclick="window.location.href='retingpage.html'" class="flex items-center justify-center space-x-2 bg-[#12141c] border border-white/10 p-4 rounded-[1.5rem] shadow-sm cursor-pointer active:scale-95 transition-transform hover:border-red-500/40">
+            <i class="fa-brands fa-youtube text-red-500 text-xl"></i>
+            <span class="font-bold text-white text-sm">Watch Tutorial</span>
         </div>
     </div>
 
+    <!-- Services Section Header -->
+    <div class="px-5 mt-10">
+        <div class="flex items-center space-x-3 mb-6">
+            <span class="w-1.5 h-6 bg-red-500 rounded-full inline-block"></span>
+            <h2 class="text-2xl font-black text-white tracking-wide">Our Services</h2>
+        </div>
+
+        <!-- 3D Cube Grid Layout (2-Column Architecture) -->
+        <div class="grid grid-cols-2 gap-4">
+
+            <!-- 1. Jio Cube -->
+            <div class="cube-card-wrapper">
+                <div class="cube-card-content">
+                    <div class="cube-icon bg-[#005AFF] text-white italic font-black text-lg">Jio</div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base">Jio</h3>
+                        <p class="text-[11px] text-gray-400 mt-1 mb-4">Recharge Unlimited 5G</p>
+                    </div>
+                    <button onclick="handleRedirect(this, 'jioplan.html')" class="classic-live-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. Airtel Cube -->
+            <div class="cube-card-wrapper">
+                <div class="cube-card-content">
+                    <div class="cube-icon bg-[#E40000] text-white text-2xl">
+                        <i class="fa-solid fa-tower-cell"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base">Airtel</h3>
+                        <p class="text-[11px] text-gray-400 mt-1 mb-4">Recharge 5G & 4G</p>
+                    </div>
+                    <button onclick="handleRedirect(this, 'airtelplan.html')" class="classic-live-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 3. Instagram Cube -->
+            <div class="cube-card-wrapper">
+                <div class="cube-card-content">
+                    <div class="cube-icon bg-gradient-to-tr from-yellow-400 via-red-500 to-purple-600 text-white text-2xl">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base">Instagram</h3>
+                        <p class="text-[11px] text-gray-400 mt-1 mb-4">Followers & Likes</p>
+                    </div>
+                    <button onclick="handleRedirect(this, 'instagramplan.html')" class="classic-live-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 4. YouTube Cube -->
+            <div class="cube-card-wrapper">
+                <div class="cube-card-content">
+                    <div class="cube-icon bg-red-600 text-white text-2xl">
+                        <i class="fa-brands fa-youtube"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base">YouTube</h3>
+                        <p class="text-[11px] text-gray-400 mt-1 mb-4">Watch-time & Subs</p>
+                    </div>
+                    <button onclick="handleRedirect(this, 'youtubeplan.html')" class="classic-live-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 5. Amazon Prime Cube -->
+            <div class="cube-card-wrapper">
+                <div class="cube-card-content">
+                    <div class="cube-icon bg-[#161922] text-[#00A8E1] text-2xl border border-sky-500/20">
+                        <i class="fa-brands fa-amazon"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base">Amazon Prime</h3>
+                        <p class="text-[11px] text-gray-400 mt-1 mb-4">Monthly Membership</p>
+                    </div>
+                    <button onclick="handleRedirect(this, 'amazonprime.html')" class="classic-live-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 6. Free Fire Top-Up Cube -->
+            <div class="cube-card-wrapper">
+                <div class="cube-card-content">
+                    <div class="cube-icon bg-gradient-to-br from-orange-500 to-red-600 text-white text-2xl">
+                        <i class="fa-solid fa-gamepad"></i>
+                    </div>
+                    <div>
+                        <h3 class="font-extrabold text-white text-base">Free Fire Top-Up</h3>
+                        <p class="text-[11px] text-gray-400 mt-1 mb-4">Diamonds & Events</p>
+                    </div>
+                    <button onclick="handleRedirect(this, 'freefire.html')" class="classic-live-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 7. Play Store Cube (Spans full width for balance) -->
+            <div class="cube-card-wrapper col-span-2">
+                <div class="cube-card-content !flex-row !justify-between !items-center !min-h-[100px] text-left px-6 py-4">
+                    <div class="flex items-center space-x-4">
+                        <div class="cube-icon !mb-0 bg-[#161922] text-emerald-400 text-2xl border border-emerald-500/20">
+                            <i class="fa-brands fa-google-play"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-extrabold text-white text-base">Play Store</h3>
+                            <p class="text-xs text-gray-400">Redeem Codes & Credits</p>
+                        </div>
+                    </div>
+                    <div class="w-32">
+                        <button onclick="handleRedirect(this, 'redeemcode.html')" class="classic-live-btn">
+                            <span class="btn-text">Plans</span>
+                            <span class="btn-loader"></span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- Footer Area -->
+    <div class="bg-[#050608] text-gray-400 mt-20 rounded-t-[3rem] px-6 py-12 border-t border-red-500/20">
+        <div class="flex justify-center mb-8">
+            <div class="w-12 h-12 bg-red-600 rounded-2xl flex items-center justify-center shadow-lg border border-red-400/30">
+                <span class="text-white font-extrabold text-3xl">V</span>
+            </div>
+            <span class="text-3xl font-extrabold text-white ml-2">Vip<span class="text-red-500">Smm</span></span>
+        </div>
+        
+        <div class="text-center space-y-3 max-w-2xl mx-auto border-t border-white/5 pt-8">
+            <p class="text-white font-bold text-base">VipSmm Global Services Private Limited</p>
+            <p class="text-xs leading-relaxed text-gray-400">702, 7th Floor, Trade World - C Wing, Kamala Mills Compound, Senapati Bapat Marg, Lower Parel, Mumbai, Maharashtra - 400013.</p>
+            <p class="text-xs text-gray-400">CIN: U72900MH2024PTC987654 | GSTIN: 27AAVCS4321B1Z0</p>
+            <p class="text-xs text-gray-400">Corporate Number: +91 9530004641</p>
+        </div>
+
+        <div class="mt-10 border-t border-white/5 pt-6 text-center">
+            <div class="flex flex-wrap justify-center gap-6 mb-4 text-xs font-semibold text-red-400">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-white transition-colors">Refund Policy</a>
+            </div>
+            <p class="text-[11px] text-gray-600">© 2026 VipSmm. All Rights Reserved.</p>
+        </div>
+    </div>
+
+    <!-- Scripts Section (Logic Intact) -->
     <script>
         const sideNav = document.getElementById('sideNav');
         const navOverlay = document.getElementById('navOverlay');
@@ -393,7 +507,7 @@
 
         // --- FIX FOR BACK BUTTON (BUFFERING RESET) ---
         window.addEventListener('pageshow', function (event) {
-            const buttons = document.querySelectorAll('.premium-3d-button');
+            const buttons = document.querySelectorAll('.classic-live-btn');
             buttons.forEach(btn => {
                 const text = btn.querySelector('.btn-text');
                 const loader = btn.querySelector('.btn-loader');
