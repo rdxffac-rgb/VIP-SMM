@@ -7,144 +7,291 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #f8fafc; color: #1a1a1a; }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
         
-        /* Premium 3D Card */
-        .premium-3d-card { position: relative; background: white; border-radius: 30px; padding: 20px; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05); border-left: 6px solid #F97316; margin-bottom: 20px; transition: 0.3s; }
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background: #090a0f; 
+            color: #ffffff; 
+            overflow-x: hidden;
+        }
         
-        /* Input Styling */
-        .input-3d { background: white; border-radius: 20px; border: 2px solid #f1f5f9; transition: all 0.3s ease; }
-        .input-3d:focus { border-color: #F97316; box-shadow: 0 0 0 4px rgba(249, 115, 22, 0.1); outline: none; }
+        /* Premium Card Styling */
+        .premium-dark-card { 
+            position: relative; 
+            background: #11131a; 
+            border-radius: 24px; 
+            padding: 20px; 
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+            margin-bottom: 20px; 
+            transition: transform 0.3s ease, box-shadow 0.3s ease; 
+        }
+
+        .premium-dark-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 30px rgba(239, 68, 68, 0.2);
+        }
+
+        .border-glow-red {
+            border-left: 5px solid #ef4444;
+            box-shadow: inset 5px 0 15px -5px rgba(239, 68, 68, 0.4);
+        }
+        
+        /* Dark Theme Input */
+        .input-dark { 
+            background: #161922; 
+            border-radius: 18px; 
+            border: 2px solid rgba(255, 255, 255, 0.08); 
+            color: #ffffff;
+            transition: all 0.3s ease; 
+        }
+        .input-dark:focus { 
+            border-color: #ef4444; 
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); 
+            outline: none; 
+        }
         
         /* Error Animation */
-        .error-shake { border-color: #ef4444 !important; animation: shake 0.2s ease-in-out 2; }
-        @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-8px); } 75% { transform: translateX(8px); } }
+        .error-shake { 
+            border-color: #ef4444 !important; 
+            animation: shake 0.2s ease-in-out 2; 
+        }
+        @keyframes shake { 
+            0%, 100% { transform: translateX(0); } 
+            25% { transform: translateX(-8px); } 
+            75% { transform: translateX(8px); } 
+        }
         
-        /* Premium 3D Button */
-        .btn-3d { background: linear-gradient(180deg, #F97316 0%, #EA580C 100%); color: white; border-radius: 16px; font-weight: 700; box-shadow: 0 4px 0px #9A3412; transition: all 0.1s ease; display: flex; align-items: center; justify-content: center; }
-        .btn-3d:active { transform: translateY(2px); box-shadow: 0 2px 0px #9A3412; }
+        /* Classic Glowing Button */
+        .btn-glow { 
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); 
+            color: white; 
+            border-radius: 16px; 
+            font-weight: 700; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3); 
+            transition: all 0.2s ease; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center; 
+            position: relative;
+            overflow: hidden;
+            animation: btnGlowPulse 2s infinite alternate;
+        }
+
+        @keyframes btnGlowPulse {
+            0% { box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
+            100% { box-shadow: 0 0 22px rgba(239, 68, 68, 0.8), 0 0 35px rgba(255, 255, 255, 0.2); }
+        }
+
+        .btn-glow::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
+            animation: btnShine 2.5s infinite;
+        }
+
+        @keyframes btnShine {
+            0% { left: -100%; }
+            50%, 100% { left: 200%; }
+        }
+
+        .btn-glow:active { 
+            transform: scale(0.97); 
+            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); 
+        }
         
         /* Loader Animation */
-        .loader { border: 3px solid rgba(255,255,255,0.3); border-top: 3px solid #fff; border-radius: 50%; width: 18px; height: 18px; animation: spin 1s linear infinite; display: none; margin-right: 8px; }
-        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        .loader { 
+            border: 3px solid rgba(255,255,255,0.3); 
+            border-top: 3px solid #fff; 
+            border-radius: 50%; 
+            width: 18px; 
+            height: 18px; 
+            animation: spin 1s linear infinite; 
+            display: none; 
+            margin-right: 8px; 
+        }
+        @keyframes spin { 
+            0% { transform: rotate(0deg); } 
+            100% { transform: rotate(360deg); } 
+        }
 
         /* Trending Blink Badge */
-        .trending-badge { position: absolute; top: -10px; right: 10px; background: #ef4444; color: white; font-size: 10px; font-weight: 800; padding: 4px 10px; border-radius: 10px; animation: blink 0.8s infinite; box-shadow: 0 0 10px rgba(239, 68, 68, 0.5); }
-        @keyframes blink { 0% { opacity: 1; } 50% { opacity: 0.3; } 100% { opacity: 1; } }
+        .trending-badge { 
+            position: absolute; 
+            top: -10px; 
+            right: 14px; 
+            background: #ef4444; 
+            color: white; 
+            font-size: 10px; 
+            font-weight: 800; 
+            padding: 4px 10px; 
+            border-radius: 10px; 
+            animation: blink 0.8s infinite; 
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.8); 
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        @keyframes blink { 
+            0% { opacity: 1; } 
+            50% { opacity: 0.3; } 
+            100% { opacity: 1; } 
+        }
     </style>
 </head>
 <body class="pb-10">
 
-    <nav class="flex items-center justify-between px-6 py-5 sticky top-0 bg-white/90 backdrop-blur-md z-50 shadow-sm">
+    <!-- Header Navigation -->
+    <nav class="flex items-center justify-between px-6 py-4 sticky top-0 bg-[#090a0f]/90 backdrop-blur-md z-50 border-b border-white/5">
         <div class="flex items-center space-x-3">
-            <a href="index.html" class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center"><i class="fa-solid fa-arrow-left text-gray-600"></i></a>
-            <span class="text-2xl font-extrabold tracking-tighter">FF <span class="text-[#F97316]">Diamonds</span></span>
+            <a href="index.html" class="w-10 h-10 bg-[#151821] border border-white/10 rounded-xl flex items-center justify-center text-white active:scale-95 transition-transform">
+                <i class="fa-solid fa-arrow-left text-gray-300"></i>
+            </a>
+            <span class="text-2xl font-black tracking-tighter text-white">FF <span class="text-red-500">Diamonds</span></span>
+        </div>
+        <div class="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
+            <i class="fa-solid fa-gem text-red-500 text-sm"></i>
         </div>
     </nav>
 
+    <!-- UID Verification Input Box -->
     <div class="px-5 mt-6">
-        <div class="premium-3d-card border-none" id="verifyBox">
-            <label class="block text-sm font-bold text-gray-700 mb-3">Enter Free Fire Player UID</label>
-            <input type="number" id="playerUid" placeholder="Ex: 123456789" class="w-full p-4 input-3d" oninput="this.classList.remove('error-shake')">
-            <button onclick="verifyUid()" id="verifyBtn" class="w-full mt-4 p-4 btn-3d">
-                <div class="loader" id="confirmLoader"></div><span id="btnText">Verify Player ID</span>
+        <div class="premium-dark-card" id="verifyBox">
+            <label class="block text-sm font-bold text-gray-200 mb-3 flex items-center justify-between">
+                <span>Enter Free Fire Player UID</span>
+                <span class="text-[11px] text-red-400 font-semibold">Instant Auto-Verification</span>
+            </label>
+            <input type="number" id="playerUid" placeholder="Ex: 123456789" class="w-full p-4 input-dark placeholder-gray-500 text-lg font-bold" oninput="this.classList.remove('error-shake')">
+            <button onclick="verifyUid()" id="verifyBtn" class="w-full mt-4 p-4 btn-glow">
+                <div class="loader" id="confirmLoader"></div>
+                <span id="btnText" class="tracking-wide">Verify Player ID</span>
             </button>
         </div>
     </div>
 
+    <!-- Diamond Plans Section -->
     <div class="px-5 mt-8 hidden" id="plansSection">
-        <h2 class="text-xl font-extrabold text-gray-800 mb-6">Select Diamond Pack</h2>
+        <div class="flex items-center space-x-3 mb-6">
+            <span class="w-1.5 h-6 bg-red-500 rounded-full inline-block"></span>
+            <h2 class="text-xl font-extrabold text-white tracking-wide">Select Diamond Pack</h2>
+        </div>
+
         <div class="space-y-4">
 
-            <div class="premium-3d-card border-l-6 border-red-500 bg-red-50/30">
+            <!-- 5000 Diamonds -->
+            <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
                 <div class="trending-badge">TRENDING</div>
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-extrabold text-xl text-red-600">5000 Diamonds</h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-extrabold text-xl text-white">5000 Diamonds</h3>
+                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xl font-black text-red-600">₹1000</span>
-                        <button onclick="buyNow(this, 'FF (5000 Diamonds)', 1000, 'Limited Edition Trending Pack, Instant 5k Credit')" class="block mt-2 px-6 py-2 btn-3d text-sm" style="background: #ef4444; box-shadow: 0 4px 0px #991b1b;"><span>Buy Now</span></button>
+                        <span class="text-2xl font-black text-red-500">₹1000</span>
+                        <button onclick="buyNow(this, 'FF (5000 Diamonds)', 1000, 'Limited Edition Trending Pack, Instant 5k Credit')" class="block mt-2 px-6 py-2 btn-glow text-sm">
+                            <span>Buy Now</span>
+                        </button>
                     </div>
                 </div>
             </div>
             
-            <div class="premium-3d-card border-l-6 border-blue-500">
+            <!-- 200 Diamonds -->
+            <div class="premium-dark-card border-glow-red">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-extrabold text-lg text-blue-600">200 Diamonds <span class="text-[10px] bg-blue-100 px-2 py-0.5 rounded-full">POPULAR</span></h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-extrabold text-lg text-white">200 Diamonds <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full ml-1">POPULAR</span></h3>
+                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xl font-black text-blue-600">₹90</span>
-                        <button onclick="buyNow(this, 'FF (200 Diamonds)', 90, 'Best For Event Completion, Instant delivery')" class="block mt-2 px-6 py-2 btn-3d text-sm" style="background: #3B82F6; box-shadow: 0 4px 0px #1E40AF;"><span>Buy</span></button>
+                        <span class="text-2xl font-black text-red-500">₹90</span>
+                        <button onclick="buyNow(this, 'FF (200 Diamonds)', 90, 'Best For Event Completion, Instant delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">
+                            <span>Buy</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="premium-3d-card">
+            <!-- 300 Diamonds -->
+            <div class="premium-dark-card border-glow-red">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-extrabold text-lg">300 Diamonds</h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-extrabold text-lg text-white">300 Diamonds</h3>
+                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xl font-black text-[#F97316]">₹120</span>
-                        <button onclick="buyNow(this, 'FF (300 Diamonds)', 120, 'Official Garena Topup, Instant Delivery')" class="block mt-2 px-6 py-2 btn-3d text-sm"><span>Buy</span></button>
+                        <span class="text-2xl font-black text-red-500">₹120</span>
+                        <button onclick="buyNow(this, 'FF (300 Diamonds)', 120, 'Official Garena Topup, Instant Delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">
+                            <span>Buy</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="premium-3d-card border-l-6 border-indigo-600 bg-indigo-50/30">
+            <!-- 560 Diamonds -->
+            <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-extrabold text-lg text-indigo-700">560 Diamonds <span class="text-[10px] bg-indigo-600 text-white px-2 py-0.5 rounded-full ml-2">PROMO</span></h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-extrabold text-lg text-white">560 Diamonds <span class="text-[10px] bg-white text-black font-extrabold px-2 py-0.5 rounded-full ml-2">PROMO</span></h3>
+                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xl font-black text-indigo-600">₹120</span>
-                        <button onclick="buyNow(this, 'FF (560 Diamonds)', 220, 'Instant Delivery, Best for Elite Pass')" class="block mt-2 px-6 py-2 btn-3d text-sm" style="background: #4F46E5; box-shadow: 0 4px 0px #312E81;"><span>Buy</span></button>
+                        <span class="text-2xl font-black text-red-500">₹120</span>
+                        <button onclick="buyNow(this, 'FF (560 Diamonds)', 220, 'Instant Delivery, Best for Elite Pass')" class="block mt-2 px-6 py-2 btn-glow text-sm">
+                            <span>Buy</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="premium-3d-card">
+            <!-- 1050 Diamonds -->
+            <div class="premium-dark-card border-glow-red">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-extrabold text-lg">1050 Diamonds</h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-extrabold text-lg text-white">1050 Diamonds</h3>
+                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xl font-black text-[#F97316]">₹300</span>
-                        <button onclick="buyNow(this, 'FF (1050 Diamonds)', 300, 'High Value Pack, Instant Credit')" class="block mt-2 px-6 py-2 btn-3d text-sm"><span>Buy</span></button>
+                        <span class="text-2xl font-black text-red-500">₹300</span>
+                        <button onclick="buyNow(this, 'FF (1050 Diamonds)', 300, 'High Value Pack, Instant Credit')" class="block mt-2 px-6 py-2 btn-glow text-sm">
+                            <span>Buy</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="premium-3d-card">
+            <!-- 1800 Diamonds -->
+            <div class="premium-dark-card border-glow-red">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-extrabold text-lg">1800 Diamonds</h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-extrabold text-lg text-white">1800 Diamonds</h3>
+                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xl font-black text-[#F97316]">₹399</span>
-                        <button onclick="buyNow(this, 'FF (1800 Diamonds)', 399, 'Mega Pack, Instant Delivery, Verified')" class="block mt-2 px-6 py-2 btn-3d text-sm"><span>Buy</span></button>
+                        <span class="text-2xl font-black text-red-500">₹399</span>
+                        <button onclick="buyNow(this, 'FF (1800 Diamonds)', 399, 'Mega Pack, Instant Delivery, Verified')" class="block mt-2 px-6 py-2 btn-glow text-sm">
+                            <span>Buy</span>
+                        </button>
                     </div>
                 </div>
             </div>
 
-            <div class="premium-3d-card border-l-6 border-purple-600" style="background: #FAF5FF;">
+            <!-- Monthly Membership -->
+            <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
                 <div class="flex justify-between items-start">
                     <div>
-                        <h3 class="font-extrabold text-lg text-purple-700">Monthly Membership <span class="text-[10px] bg-purple-600 text-white px-2 py-0.5 rounded-full ml-2">VIP</span></h3>
-                        <p class="text-xs text-gray-500">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-extrabold text-lg text-white">Monthly Membership <span class="text-[10px] bg-red-600 text-white font-extrabold px-2 py-0.5 rounded-full ml-2">VIP</span></h3>
+                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
                     </div>
                     <div class="text-right">
-                        <span class="text-2xl font-black text-purple-600">₹299</span>
-                        <button onclick="buyNow(this, 'FF Monthly Membership', 299, '30 Days Rewards, Instant VIP Badge, Fast Credit')" class="block mt-2 px-6 py-2 btn-3d text-sm" style="background: #9333EA; box-shadow: 0 4px 0px #581C87;"><span>Buy</span></button>
+                        <span class="text-2xl font-black text-red-500">₹299</span>
+                        <button onclick="buyNow(this, 'FF Monthly Membership', 299, '30 Days Rewards, Instant VIP Badge, Fast Credit')" class="block mt-2 px-6 py-2 btn-glow text-sm">
+                            <span>Buy</span>
+                        </button>
                     </div>
                 </div>
             </div>
@@ -168,8 +315,8 @@
                 setTimeout(() => {
                     loader.style.display = 'none';
                     btnText.innerText = "Verified: " + uid;
-                    document.getElementById('verifyBtn').style.background = "#059669"; 
-                    document.getElementById('verifyBtn').style.boxShadow = "0 4px 0px #064E3B";
+                    document.getElementById('verifyBtn').style.background = "linear-gradient(135deg, #10b981 0%, #047857 100%)"; 
+                    document.getElementById('verifyBtn').style.boxShadow = "0 0 20px rgba(16, 185, 129, 0.6)";
                     isConfirmed = true;
                     localStorage.setItem('ffUid', uid);
                     
@@ -204,7 +351,7 @@
         }
 
         window.addEventListener('pageshow', function () {
-            const buttons = document.querySelectorAll('.btn-3d');
+            const buttons = document.querySelectorAll('.btn-glow');
             buttons.forEach(b => {
                 if(b.innerText.includes('Processing')) {
                     if(b.innerText.includes('999')) {
