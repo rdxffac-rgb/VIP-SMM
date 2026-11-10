@@ -213,9 +213,43 @@
                 transform: scale(1.02);
             }
         }
+
+        /* Modal Styles */
+        #uidModal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.85);
+            z-index: 250;
+            backdrop-filter: blur(8px);
+            align-items: center;
+            justify-content: center;
+        }
     </style>
 </head>
 <body>
+
+    <!-- UID Input Modal -->
+    <div id="uidModal" class="px-4">
+        <div class="bg-[#151821] border border-red-500/40 p-6 rounded-3xl w-full max-w-sm shadow-2xl relative text-center">
+            <button onclick="closeUidModal()" class="absolute top-4 right-4 text-gray-400 hover:text-white text-xl">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="w-14 h-14 bg-red-500/10 rounded-2xl flex items-center justify-center mx-auto mb-4 border border-red-500/30">
+                <i class="fa-solid fa-gamepad text-red-500 text-2xl"></i>
+            </div>
+            <h3 class="text-xl font-extrabold text-white">Enter Free Fire UID</h3>
+            <p class="text-xs text-gray-400 mt-1 mb-5">Offer: 3500 Diamonds at just ₹299</p>
+
+            <input type="number" id="ffUidInput" placeholder="Enter Your UID (e.g. 123456789)" class="w-full bg-[#0d0f15] border border-white/10 rounded-xl px-4 py-3.5 text-white placeholder-gray-500 focus:outline-none focus:border-red-500 transition-colors text-center text-base tracking-widest font-bold mb-4">
+            
+            <p id="uidError" class="text-red-500 text-xs mb-3 hidden">Please enter a valid FF UID</p>
+
+            <button onclick="submitUid()" class="classic-live-btn !py-3">
+                <span class="btn-text">NEXT <i class="fa-solid fa-arrow-right ml-1"></i></span>
+            </button>
+        </div>
+    </div>
 
     <!-- Full Screen Alert Modal -->
     <div id="customAlert">
@@ -274,14 +308,14 @@
 
     <!-- Bundle Banner Section -->
     <div class="px-5 mt-4">
-        <a href="https://freefire.life" class="block rounded-[1.8rem] overflow-hidden shadow-2xl border border-red-500/30 active:scale-[0.98] transition-transform bg-[#11131a]">
-            <img src="unban.png" alt="Unban FF ID" class="w-full h-auto object-cover block">
-        </a>
-        <a href="https://freefire.life" class="fire-btn mt-3 flex items-center justify-center space-x-2 py-3 px-6 rounded-2xl text-white font-black text-base tracking-wider uppercase active:scale-95 transition-transform border border-red-400/40">
+        <div onclick="openUidModal()" class="block rounded-[1.8rem] overflow-hidden shadow-2xl border border-red-500/30 active:scale-[0.98] transition-transform bg-[#11131a] cursor-pointer">
+            <img src="offer.jpg" alt="Special Offer" class="w-full h-auto object-cover block">
+        </div>
+        <button onclick="openUidModal()" class="fire-btn mt-3 w-full flex items-center justify-center space-x-2 py-3 px-6 rounded-2xl text-white font-black text-base tracking-wider uppercase active:scale-95 transition-transform border border-red-400/40">
             <i class="fa-solid fa-fire text-white text-lg"></i>
-            <span>UNBAN FF ID</span>
+            <span>CLAIM NOW</span>
             <i class="fa-solid fa-bolt text-white text-lg"></i>
-        </a>
+        </button>
     </div>
 
     <!-- Quick Help & Tutorials -->
@@ -456,11 +490,42 @@
         </div>
     </div>
 
-    <!-- Scripts Section (Logic Intact) -->
+    <!-- Scripts Section -->
     <script>
         const sideNav = document.getElementById('sideNav');
         const navOverlay = document.getElementById('navOverlay');
         const customAlert = document.getElementById('customAlert');
+        const uidModal = document.getElementById('uidModal');
+        const ffUidInput = document.getElementById('ffUidInput');
+        const uidError = document.getElementById('uidError');
+
+        // Modal Controls
+        function openUidModal() {
+            uidModal.style.display = 'flex';
+            ffUidInput.value = '';
+            uidError.classList.add('hidden');
+            ffUidInput.focus();
+        }
+
+        function closeUidModal() {
+            uidModal.style.display = 'none';
+        }
+
+        function submitUid() {
+            const uid = ffUidInput.value.trim();
+            if (!uid || uid.length < 5) {
+                uidError.classList.remove('hidden');
+                return;
+            }
+
+            // Save details for payment page
+            localStorage.setItem('selectedPlan', '3500 Diamonds');
+            localStorage.setItem('selectedPrice', '299');
+            localStorage.setItem('playerUid', uid);
+
+            // Redirect with query parameters
+            window.location.href = `payment.html?bundle=${encodeURIComponent('3500 Diamonds')}&price=299&uid=${encodeURIComponent(uid)}`;
+        }
 
         // Toggle Drawer Control
         function toggleMenu() {
