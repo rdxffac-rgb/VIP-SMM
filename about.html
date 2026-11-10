@@ -7,25 +7,62 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
         
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body {
             font-family: 'Plus Jakarta Sans', sans-serif;
-            background: #fdfdfd;
-            color: #1e293b;
+            background: #05070d;
+            color: #ffffff;
+            overflow-x: hidden;
+            margin: 0;
+            padding: 0;
             scroll-behavior: smooth;
         }
 
-        /* 3D Glassmorphism Card */
+        /* Fullscreen Interactive Cyber Canvas Live Background */
+        #liveBgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Subtle mesh overlay */
+        .ambient-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 50% 15%, rgba(239, 68, 68, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 15% 65%, rgba(99, 102, 241, 0.12) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Premium Cyber 3D Card */
         .premium-3d-section {
-            background: white;
-            border-radius: 40px;
-            box-shadow: 
-                0 20px 40px rgba(0,0,0,0.05),
-                inset 0 1px 0 rgba(255,255,255,1),
-                inset 0 -6px 0 rgba(0,0,0,0.02);
-            border: 1px solid rgba(226, 232, 240, 0.8);
-            transition: transform 0.4s ease;
+            background: rgba(12, 16, 26, 0.88);
+            backdrop-filter: blur(14px);
+            border-radius: 26px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: transform 0.25s ease, box-shadow 0.25s ease;
+            position: relative;
+            z-index: 2;
+        }
+
+        .premium-3d-section:hover {
+            transform: translateY(-2px);
         }
 
         /* Floating Animation */
@@ -34,199 +71,279 @@
         }
         @keyframes float {
             0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-12px); }
             100% { transform: translateY(0px); }
         }
 
         /* Gradient Text */
         .gradient-text {
-            background: linear-gradient(135deg, #4f46e5 0%, #7c3aed 100%);
+            background: linear-gradient(135deg, #ef4444 0%, #f97316 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .hero-bg {
-            background: radial-gradient(circle at top right, #eef2ff, transparent),
-                        radial-gradient(circle at bottom left, #f5f3ff, transparent);
-        }
-
-        /* Trusted Badge Style */
+        /* Trust Badge Style */
         .trust-badge {
-            background: #f0fdf4;
-            border: 1px solid #bbf7d0;
-            color: #166534;
-            padding: 8px 20px;
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.35);
+            color: #34d399;
+            padding: 6px 18px;
             border-radius: 100px;
             display: inline-flex;
             align-items: center;
-            font-weight: 700;
-            font-size: 0.8rem;
+            font-weight: 800;
+            font-size: 0.78rem;
+            letter-spacing: 0.5px;
+            box-shadow: 0 0 14px rgba(16, 185, 129, 0.2);
+        }
+
+        /* Glow Accents */
+        .border-glow-red {
+            border-left: 4px solid #ef4444;
+            box-shadow: 0 0 18px rgba(239, 68, 68, 0.25), inset 4px 0 12px -3px rgba(239, 68, 68, 0.35);
         }
     </style>
 </head>
-<body class="hero-bg">
+<body class="relative">
 
-    <nav class="flex items-center px-6 py-6 sticky top-0 bg-white/80 backdrop-blur-md z-50 border-b border-gray-100">
-        <a href="index.html" class="w-10 h-10 bg-gray-100 rounded-xl flex items-center justify-center mr-4 active:scale-90 transition">
-            <i class="fa-solid fa-arrow-left text-gray-700"></i>
+    <!-- Live Animated Canvas Background -->
+    <canvas id="liveBgCanvas"></canvas>
+    <div class="ambient-grid"></div>
+
+    <!-- Header Navigation -->
+    <nav class="flex items-center px-5 py-3.5 sticky top-0 bg-[#060810]/95 backdrop-blur-md z-40 border-b border-white/5">
+        <a href="index.html" class="w-9 h-9 bg-[#121520] border border-white/10 rounded-xl flex items-center justify-center mr-4 active:scale-95 transition-transform text-white">
+            <i class="fa-solid fa-arrow-left text-gray-300 text-sm"></i>
         </a>
-        <h1 class="text-xl font-extrabold text-gray-900 tracking-tight">About <span class="text-indigo-600">VipSmm</span></h1>
+        <h1 class="text-xl font-black text-white tracking-tight">About <span class="text-red-500">VipSmm</span></h1>
     </nav>
 
-    <div class="px-5 mt-10 text-center">
-        <div class="trust-badge mb-4">
-            <i class="fa-solid fa-shield-check mr-2"></i> ISO 9001:2015 Certified Agency
+    <!-- Hero Section -->
+    <div class="px-5 mt-6 text-center relative z-10">
+        <div class="trust-badge mb-3">
+            <i class="fa-solid fa-shield-halved mr-2"></i> ISO 9001:2015 Certified Agency
         </div>
-        <h2 class="text-4xl font-extrabold leading-tight tracking-tighter">India's Most Trusted <br> <span class="gradient-text">Digital Growth</span> Partner</h2>
-        <p class="mt-4 text-gray-500 font-medium leading-relaxed">Hum sirf services nahi dete, hum aapke digital sapno ko haqeeqat mein badalte hain.</p>
+        <h2 class="text-3xl font-black leading-tight tracking-tight text-white">India's Most Trusted <br> <span class="gradient-text">Digital Growth</span> Partner</h2>
+        <p class="mt-3 text-gray-400 font-medium text-xs leading-relaxed max-w-sm mx-auto">Hum sirf services nahi dete, hum aapke digital sapno ko haqeeqat mein badalte hain.</p>
         
-        <div class="mt-10 floating">
-            <div class="w-24 h-24 bg-indigo-600 rounded-[2rem] mx-auto flex items-center justify-center shadow-2xl shadow-indigo-300">
-                <span class="text-white font-black text-4xl">V</span>
+        <div class="mt-7 floating">
+            <div class="w-20 h-20 bg-gradient-to-tr from-red-600 to-red-500 rounded-3xl mx-auto flex items-center justify-center shadow-2xl shadow-red-500/40 border border-red-400/40">
+                <span class="text-white font-black text-3xl">V</span>
             </div>
         </div>
     </div>
 
-    <div class="px-5 mt-16">
-        <div class="premium-3d-section p-8">
-            <h3 class="text-2xl font-extrabold mb-4">Hum Kaun Hain?</h3>
-            <p class="text-gray-600 leading-relaxed mb-6">
+    <!-- Who We Are Section -->
+    <div class="px-4 mt-8 relative z-10">
+        <div class="premium-3d-section p-6">
+            <h3 class="text-xl font-black mb-3 text-white">Hum Kaun Hain?</h3>
+            <p class="text-gray-300 text-xs sm:text-sm leading-relaxed mb-5">
                 VipSmm ek registered digital agency hai jo pichle 5 saalon se social media marketing aur premium subscriptions mein leader rahi hai. Hamara maksad har creator aur business ko "Premium Quality" services dena hai woh bhi sabse saste daam par.
             </p>
-            <div class="grid grid-cols-2 gap-4">
-                <div class="bg-indigo-50 p-4 rounded-3xl border border-indigo-100">
-                    <h4 class="font-black text-indigo-600 text-2xl">50K+</h4>
-                    <p class="text-xs font-bold text-indigo-800 uppercase tracking-wider">Happy Clients</p>
+            <div class="grid grid-cols-2 gap-3">
+                <div class="bg-[#090c15] p-3.5 rounded-2xl border border-red-500/25">
+                    <h4 class="font-black text-red-500 text-xl">50K+</h4>
+                    <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mt-0.5">Happy Clients</p>
                 </div>
-                <div class="bg-emerald-50 p-4 rounded-3xl border border-emerald-100">
-                    <h4 class="font-black text-emerald-600 text-2xl">100%</h4>
-                    <p class="text-xs font-bold text-emerald-800 uppercase tracking-wider">Secure Payment</p>
+                <div class="bg-[#090c15] p-3.5 rounded-2xl border border-emerald-500/25">
+                    <h4 class="font-black text-emerald-400 text-xl">100%</h4>
+                    <p class="text-[10px] font-extrabold text-gray-400 uppercase tracking-wider mt-0.5">Secure Payment</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="px-5 mt-12">
-        <div class="premium-3d-section p-8 border-l-8 border-indigo-600 bg-indigo-50/30">
-            <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-md mb-6">
-                <i class="fa-solid fa-bolt-lightning text-indigo-600 text-2xl"></i>
+    <!-- Why Big Discount Section -->
+    <div class="px-4 mt-6 relative z-10">
+        <div class="premium-3d-section p-6 border-glow-red">
+            <div class="w-10 h-10 bg-red-500/10 border border-red-500/30 rounded-xl flex items-center justify-center shadow-sm mb-4">
+                <i class="fa-solid fa-bolt-lightning text-red-500 text-lg"></i>
             </div>
-            <h3 class="text-2xl font-extrabold mb-4">Jio aur Airtel par <span class="text-indigo-600">Big Discount</span> Kyon?</h3>
-            <p class="text-gray-600 leading-relaxed mb-6">
+            <h3 class="text-lg font-black mb-3 text-white">Jio aur Airtel par <span class="text-red-500">Big Discount</span> Kyon?</h3>
+            <p class="text-gray-300 text-xs leading-relaxed mb-4">
                 Aapne dekha hoga ki market mein Jio aur Airtel ke recharges mehenge hote ja rahe hain. VipSmm par hum aapko yahi recharge discount par dete hain. Iske peeche 3 bade karan hain:
             </p>
             
-            <div class="space-y-4">
+            <div class="space-y-3">
                 <div class="flex items-start">
-                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex-shrink-0 mt-1 flex items-center justify-center">
-                        <i class="fa-solid fa-check text-[10px] text-white"></i>
+                    <div class="w-5 h-5 bg-red-600 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center">
+                        <i class="fa-solid fa-check text-[9px] text-white"></i>
                     </div>
-                    <p class="ml-3 text-sm font-semibold text-gray-700"><b>Bulk Inventory:</b> Hum direct distributors se wholesale mein plans purchase karte hain.</p>
+                    <p class="ml-2.5 text-xs text-gray-300"><b class="text-white">Bulk Inventory:</b> Hum direct distributors se wholesale mein plans purchase karte hain.</p>
                 </div>
                 <div class="flex items-start">
-                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex-shrink-0 mt-1 flex items-center justify-center">
-                        <i class="fa-solid fa-check text-[10px] text-white"></i>
+                    <div class="w-5 h-5 bg-red-600 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center">
+                        <i class="fa-solid fa-check text-[9px] text-white"></i>
                     </div>
-                    <p class="ml-3 text-sm font-semibold text-gray-700"><b>Corporate Partnership:</b> Hamari special corporate ties hain jo hamein API base discounts dilwati hain.</p>
+                    <p class="ml-2.5 text-xs text-gray-300"><b class="text-white">Corporate Partnership:</b> Hamari special corporate ties hain jo hamein API base discounts dilwati hain.</p>
                 </div>
                 <div class="flex items-start">
-                    <div class="w-6 h-6 bg-indigo-600 rounded-full flex-shrink-0 mt-1 flex items-center justify-center">
-                        <i class="fa-solid fa-check text-[10px] text-white"></i>
+                    <div class="w-5 h-5 bg-red-600 rounded-full flex-shrink-0 mt-0.5 flex items-center justify-center">
+                        <i class="fa-solid fa-check text-[9px] text-white"></i>
                     </div>
-                    <p class="ml-3 text-sm font-semibold text-gray-700"><b>Zero Marketing Cost:</b> Hum advertisements par kharch karne ke bajaye woh paisa direct apne users ko discount ke roop mein dete hain.</p>
+                    <p class="ml-2.5 text-xs text-gray-300"><b class="text-white">Zero Marketing Cost:</b> Hum advertisements par kharch karne ke bajaye woh paisa direct apne users ko discount ke roop mein dete hain.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="px-5 mt-12">
-        <h3 class="text-2xl font-extrabold mb-8 text-center">Aakhir Hum Par <span class="text-indigo-600">Bharosa</span> Kyon?</h3>
+    <!-- Why Trust Us Section -->
+    <div class="px-4 mt-8 relative z-10">
+        <h3 class="text-lg font-black mb-5 text-center text-white">Aakhir Hum Par <span class="text-red-500">Bharosa</span> Kyon?</h3>
         
-        <div class="grid grid-cols-1 gap-6">
-            <div class="premium-3d-section p-6 flex items-center">
-                <div class="w-14 h-14 bg-rose-100 text-rose-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-bolt text-2xl"></i>
+        <div class="grid grid-cols-1 gap-3.5">
+            <div class="premium-3d-section p-4 flex items-center">
+                <div class="w-11 h-11 bg-rose-500/10 border border-rose-500/30 text-rose-500 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-bolt text-lg"></i>
                 </div>
-                <div class="ml-5">
-                    <h4 class="font-bold text-lg">Instant Delivery</h4>
-                    <p class="text-xs text-gray-500">Aapka order seconds mein start hota hai.</p>
-                </div>
-            </div>
-
-            <div class="premium-3d-section p-6 flex items-center">
-                <div class="w-14 h-14 bg-emerald-100 text-emerald-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-headset text-2xl"></i>
-                </div>
-                <div class="ml-5">
-                    <h4 class="font-bold text-lg">24/7 VIP Support</h4>
-                    <p class="text-xs text-gray-500">WhatsApp par hamesha aapki madad ke liye taiyar.</p>
+                <div class="ml-4">
+                    <h4 class="font-extrabold text-white text-sm">Instant Delivery</h4>
+                    <p class="text-[11px] text-gray-400 mt-0.5">Aapka order seconds mein start hota hai.</p>
                 </div>
             </div>
 
-            <div class="premium-3d-section p-6 flex items-center">
-                <div class="w-14 h-14 bg-blue-100 text-blue-600 rounded-2xl flex items-center justify-center flex-shrink-0">
-                    <i class="fa-solid fa-lock text-2xl"></i>
+            <div class="premium-3d-section p-4 flex items-center">
+                <div class="w-11 h-11 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-headset text-lg"></i>
                 </div>
-                <div class="ml-5">
-                    <h4 class="font-bold text-lg">Anti-Drop Guarantee</h4>
-                    <p class="text-xs text-gray-500">Hamari services 100% genuine aur permanent hain.</p>
+                <div class="ml-4">
+                    <h4 class="font-extrabold text-white text-sm">24/7 VIP Support</h4>
+                    <p class="text-[11px] text-gray-400 mt-0.5">Telegram aur chat par hamesha aapki madad ke liye taiyar.</p>
+                </div>
+            </div>
+
+            <div class="premium-3d-section p-4 flex items-center">
+                <div class="w-11 h-11 bg-blue-500/10 border border-blue-500/30 text-blue-400 rounded-xl flex items-center justify-center flex-shrink-0">
+                    <i class="fa-solid fa-shield-halved text-lg"></i>
+                </div>
+                <div class="ml-4">
+                    <h4 class="font-extrabold text-white text-sm">Anti-Drop Guarantee</h4>
+                    <p class="text-[11px] text-gray-400 mt-0.5">Hamari services 100% genuine aur permanent hain.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="px-5 mt-12">
-        <div class="premium-3d-section p-8 bg-gray-900 text-white">
-            <h3 class="text-2xl font-extrabold mb-4 text-white">Legal Transparency</h3>
-            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+    <!-- Legal Transparency Section -->
+    <div class="px-4 mt-6 relative z-10">
+        <div class="premium-3d-section p-6 border border-white/10">
+            <h3 class="text-lg font-black mb-2 text-white">Legal Transparency</h3>
+            <p class="text-gray-400 text-xs mb-4 leading-relaxed">
                 Hamari company Maharashtra (Mumbai) se operate hoti hai. Hum poori tarah se GST compliant hain aur hamara vision market mein transparency lana hai.
             </p>
-            <div class="space-y-3">
-                <div class="flex justify-between border-b border-gray-800 pb-2">
-                    <span class="text-xs font-bold text-gray-500">GST Registration</span>
-                    <span class="text-xs text-emerald-400 font-mono">VERIFIED ✔</span>
+            <div class="space-y-2.5">
+                <div class="flex justify-between border-b border-white/5 pb-2">
+                    <span class="text-xs font-bold text-gray-400">GST Registration</span>
+                    <span class="text-xs text-emerald-400 font-mono font-bold">VERIFIED ✔</span>
                 </div>
-                <div class="flex justify-between border-b border-gray-800 pb-2">
-                    <span class="text-xs font-bold text-gray-500">Payment Security</span>
-                    <span class="text-xs text-emerald-400 font-mono">SSL ENCRYPTED ✔</span>
+                <div class="flex justify-between border-b border-white/5 pb-2">
+                    <span class="text-xs font-bold text-gray-400">Payment Security</span>
+                    <span class="text-xs text-emerald-400 font-mono font-bold">SSL ENCRYPTED ✔</span>
                 </div>
                 <div class="flex justify-between">
-                    <span class="text-xs font-bold text-gray-500">User Privacy</span>
-                    <span class="text-xs text-emerald-400 font-mono">256-BIT SECURE ✔</span>
+                    <span class="text-xs font-bold text-gray-400">User Privacy</span>
+                    <span class="text-xs text-emerald-400 font-mono font-bold">256-BIT SECURE ✔</span>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="bg-[#0f172a] text-gray-400 mt-20 rounded-t-[3.5rem] px-6 py-12 shadow-inner">
-        <div class="flex justify-center mb-10">
-            <div class="flex items-center space-x-3">
-                <div class="w-12 h-12 bg-white rounded-2xl flex items-center justify-center shadow-lg">
-                    <span class="text-indigo-600 font-extrabold text-3xl">V</span>
-                </div>
-                <span class="text-3xl font-extrabold text-white ml-2 tracking-tighter">Vip<span class="text-gray-500">Smm</span></span>
+    <!-- Footer Area matching Homepage -->
+    <div class="relative z-10 mt-14 pb-10 pt-8 text-center text-gray-400 border-t border-white/5 bg-[#04060b]/90 backdrop-blur-md">
+        <div class="flex items-center justify-center space-x-2 mb-3">
+            <div class="w-8 h-8 bg-gradient-to-tr from-red-600 to-red-500 rounded-xl flex items-center justify-center text-white font-black text-sm">
+                V
             </div>
+            <span class="text-2xl font-black text-white tracking-tight">Vip<span class="text-red-500">Smm</span></span>
         </div>
 
-        <div class="text-center space-y-4 max-w-2xl mx-auto border-t border-gray-800 pt-10">
-            <p class="text-white font-bold text-lg">VipSmm Global Services Private Limited</p>
-            <p class="text-sm">
-                <span class="font-semibold text-gray-200">Registered Office:</span> 702, 7th Floor, Trade World - C Wing, Kamala Mills Compound, Senapati Bapat Marg, Lower Parel, Mumbai, Maharashtra - 400013.
+        <div class="text-center space-y-2 max-w-xl mx-auto px-4 pt-4 border-t border-white/5">
+            <p class="text-white font-bold text-sm">VipSmm Global Services Private Limited</p>
+            <p class="text-xs text-gray-400 leading-relaxed">
+                <span class="font-semibold text-gray-300">Registered Office:</span> 702, 7th Floor, Trade World - C Wing, Kamala Mills Compound, Senapati Bapat Marg, Lower Parel, Mumbai, Maharashtra - 400013.
             </p>
-            <p class="text-sm"><span class="font-semibold text-gray-200">CIN:</span> U72900MH2024PTC987654 | <span class="font-semibold text-gray-200">GSTIN:</span> 27AAVCS4321B1Z0</p>
-            <p class="text-sm">Corporate Number: +91 9530004641</p>
+            <p class="text-xs text-gray-400"><span class="font-semibold text-gray-300">CIN:</span> U72900MH2024PTC987654 | <span class="font-semibold text-gray-300">GSTIN:</span> 27AAVCS4321B1Z0</p>
+            <p class="text-xs text-gray-400">Corporate Number: +91 9530004641</p>
         </div>
 
-        <div class="mt-12 border-t border-gray-800 pt-8 text-center">
-            <div class="flex flex-wrap justify-center gap-6 mb-8 text-sm font-medium text-indigo-400">
-                <a href="#" class="hover:text-white transition underline decoration-indigo-800">Privacy Policy</a>
-                <a href="#" class="hover:text-white transition underline decoration-indigo-800">Terms of Service</a>
-                <a href="#" class="hover:text-white transition underline decoration-indigo-800">Refund Policy</a>
+        <div class="mt-6 border-t border-white/5 pt-4 text-center">
+            <div class="flex flex-wrap justify-center gap-5 text-xs text-red-400 font-semibold mb-3">
+                <a href="#" class="hover:text-white transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-white transition-colors">Terms of Service</a>
+                <a href="#" class="hover:text-white transition-colors">Refund Policy</a>
             </div>
-            <p class="text-xs text-gray-600">© 2026 VipSmm. Designed with excellence.</p>
+            <p class="text-[10px] text-gray-600">© 2026 VipSmm. All Rights Reserved.</p>
         </div>
     </div>
 
+    <!-- Live Animated Canvas Script -->
+    <script>
+        (function initLiveBg() {
+            const canvas = document.getElementById('liveBgCanvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const particleCount = window.innerWidth < 640 ? 30 : 45;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.45,
+                    vy: (Math.random() - 0.5) * 0.45,
+                    radius: Math.random() * 1.5 + 0.8,
+                    color: Math.random() > 0.5 ? 'rgba(99, 102, 241,' : 'rgba(239, 68, 68,'
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 85) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(165, 180, 252, ${0.16 * (1 - dist / 85)})`;
+                            ctx.lineWidth = 0.6;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = w;
+                    if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h;
+                    if (p.y > h) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color + '0.7)';
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = p.color + '1)';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+    </script>
 </body>
-              </html>
-          
+</html>
