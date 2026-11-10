@@ -9,290 +9,430 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800;900&display=swap');
         
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
         body { 
             font-family: 'Plus Jakarta Sans', sans-serif; 
-            background: #090a0f; 
+            background: #05070d; 
             color: #ffffff; 
             overflow-x: hidden;
+            margin: 0;
+            padding: 0;
         }
-        
-        /* Premium Card Styling */
+
+        /* Fullscreen Interactive Cyber Canvas Live Background */
+        #liveBgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Ambient glowing grid */
+        .ambient-grid {
+            position: fixed;
+            inset: 0;
+            background-image: 
+                radial-gradient(circle at 50% 15%, rgba(239, 68, 68, 0.12) 0%, transparent 45%),
+                radial-gradient(circle at 15% 65%, rgba(0, 132, 255, 0.12) 0%, transparent 45%),
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 100% 100%, 100% 100%, 28px 28px, 28px 28px;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        /* Membership Top Banner Card */
+        .membership-banner-card {
+            border: 2px solid #ef4444;
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.5), inset 0 0 10px rgba(239, 68, 68, 0.25);
+            border-radius: 20px;
+            overflow: hidden;
+            background: #0c0e17;
+            cursor: pointer;
+            position: relative;
+            aspect-ratio: 2.1 / 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: transform 0.2s ease;
+        }
+
+        .membership-banner-card:active {
+            transform: scale(0.98);
+        }
+
+        .membership-banner-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: fill;
+            display: block;
+        }
+
+        /* 2-Column Cyber Grid Cards matching image style */
+        .cyber-pack-card {
+            background: rgba(12, 16, 26, 0.88);
+            backdrop-filter: blur(12px);
+            border-radius: 18px;
+            padding: 13px 12px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            height: 154px;
+            position: relative;
+            transition: transform 0.2s ease;
+            z-index: 2;
+        }
+
+        .cyber-pack-card:active {
+            transform: scale(0.97);
+        }
+
+        /* Card Neon Glow Borders */
+        .neon-blue {
+            border: 1.6px solid #0084ff;
+            box-shadow: 0 0 15px rgba(0, 132, 255, 0.38), inset 0 0 8px rgba(0, 132, 255, 0.12);
+        }
+
+        .neon-red {
+            border: 1.6px solid #ef4444;
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.38), inset 0 0 8px rgba(239, 68, 68, 0.12);
+        }
+
+        .neon-purple {
+            border: 1.6px solid #d946ef;
+            box-shadow: 0 0 15px rgba(217, 70, 239, 0.38), inset 0 0 8px rgba(217, 70, 239, 0.12);
+        }
+
+        .neon-orange {
+            border: 1.6px solid #f97316;
+            box-shadow: 0 0 15px rgba(249, 115, 22, 0.38), inset 0 0 8px rgba(249, 115, 22, 0.12);
+        }
+
+        /* Clean "Plans" Button */
+        .cyber-plan-btn {
+            background: rgba(3, 7, 18, 0.85);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 11px;
+            padding: 7px 0;
+            color: #ffffff;
+            font-weight: 700;
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            width: 100%;
+            transition: all 0.2s ease;
+        }
+
+        .cyber-plan-btn:active {
+            transform: scale(0.96);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        /* Diamond Logo Box */
+        .diamond-icon-frame {
+            width: 42px;
+            height: 42px;
+            border-radius: 12px;
+            background: #090e18;
+            border: 1px solid rgba(56, 189, 248, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+            box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+            flex-shrink: 0;
+        }
+
+        .diamond-icon-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+
+        /* Verification Box Card */
         .premium-dark-card { 
             position: relative; 
-            background: #11131a; 
-            border-radius: 24px; 
-            padding: 20px; 
+            background: rgba(12, 16, 26, 0.9); 
+            backdrop-filter: blur(12px);
+            border-radius: 20px; 
+            padding: 16px; 
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5); 
             border: 1px solid rgba(255, 255, 255, 0.08); 
-            margin-bottom: 20px; 
-            transition: transform 0.3s ease, box-shadow 0.3s ease; 
         }
 
-        .premium-dark-card:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 12px 30px rgba(239, 68, 68, 0.2);
-        }
-
-        .border-glow-red {
-            border-left: 5px solid #ef4444;
-            box-shadow: inset 5px 0 15px -5px rgba(239, 68, 68, 0.4);
-        }
-        
-        /* Dark Theme Input */
         .input-dark { 
-            background: #161922; 
-            border-radius: 18px; 
-            border: 2px solid rgba(255, 255, 255, 0.08); 
+            background: #0c0f17; 
+            border-radius: 14px; 
+            border: 1.5px solid rgba(255, 255, 255, 0.1); 
             color: #ffffff;
             transition: all 0.3s ease; 
         }
+
         .input-dark:focus { 
             border-color: #ef4444; 
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.3); 
+            box-shadow: 0 0 15px rgba(239, 68, 68, 0.35); 
             outline: none; 
         }
-        
-        /* Error Animation */
+
+        .btn-glow { 
+            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); 
+            color: white; 
+            border-radius: 12px; 
+            font-weight: 800; 
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 0 12px rgba(239, 68, 68, 0.5); 
+            transition: all 0.2s ease; 
+            display: inline-flex; 
+            align-items: center; 
+            justify-content: center; 
+            cursor: pointer;
+        }
+
+        .btn-glow:active { 
+            transform: scale(0.96); 
+        }
+
         .error-shake { 
             border-color: #ef4444 !important; 
             animation: shake 0.2s ease-in-out 2; 
         }
         @keyframes shake { 
             0%, 100% { transform: translateX(0); } 
-            25% { transform: translateX(-8px); } 
-            75% { transform: translateX(8px); } 
-        }
-        
-        /* Classic Glowing Button */
-        .btn-glow { 
-            background: linear-gradient(135deg, #ef4444 0%, #b91c1c 100%); 
-            color: white; 
-            border-radius: 16px; 
-            font-weight: 700; 
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.3); 
-            transition: all 0.2s ease; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            position: relative;
-            overflow: hidden;
-            animation: btnGlowPulse 2s infinite alternate;
+            25% { transform: translateX(-6px); } 
+            75% { transform: translateX(6px); } 
         }
 
-        @keyframes btnGlowPulse {
-            0% { box-shadow: 0 0 12px rgba(239, 68, 68, 0.4); }
-            100% { box-shadow: 0 0 22px rgba(239, 68, 68, 0.8), 0 0 35px rgba(255, 255, 255, 0.2); }
+        .btn-loader {
+            width: 14px;
+            height: 14px;
+            border: 2px solid #ffffff;
+            border-bottom-color: transparent;
+            border-radius: 50%;
+            display: none;
+            animation: spinLoader 0.9s linear infinite;
         }
-
-        .btn-glow::after {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.35), transparent);
-            animation: btnShine 2.5s infinite;
-        }
-
-        @keyframes btnShine {
-            0% { left: -100%; }
-            50%, 100% { left: 200%; }
-        }
-
-        .btn-glow:active { 
-            transform: scale(0.97); 
-            box-shadow: 0 0 8px rgba(239, 68, 68, 0.6); 
-        }
-        
-        /* Loader Animation */
-        .loader { 
-            border: 3px solid rgba(255,255,255,0.3); 
-            border-top: 3px solid #fff; 
-            border-radius: 50%; 
-            width: 18px; 
-            height: 18px; 
-            animation: spin 1s linear infinite; 
-            display: none; 
-            margin-right: 8px; 
-        }
-        @keyframes spin { 
+        @keyframes spinLoader {
             0% { transform: rotate(0deg); } 
             100% { transform: rotate(360deg); } 
         }
-
-        /* Trending Blink Badge */
-        .trending-badge { 
-            position: absolute; 
-            top: -10px; 
-            right: 14px; 
-            background: #ef4444; 
-            color: white; 
-            font-size: 10px; 
-            font-weight: 800; 
-            padding: 4px 10px; 
-            border-radius: 10px; 
-            animation: blink 0.8s infinite; 
-            box-shadow: 0 0 12px rgba(239, 68, 68, 0.8); 
-            border: 1px solid rgba(255, 255, 255, 0.3);
-        }
-        @keyframes blink { 
-            0% { opacity: 1; } 
-            50% { opacity: 0.3; } 
-            100% { opacity: 1; } 
-        }
     </style>
 </head>
-<body class="pb-10">
+<body class="pb-16 relative">
+
+    <!-- Live Animated Canvas Background -->
+    <canvas id="liveBgCanvas"></canvas>
+    <div class="ambient-grid"></div>
 
     <!-- Header Navigation -->
-    <nav class="flex items-center justify-between px-6 py-4 sticky top-0 bg-[#090a0f]/90 backdrop-blur-md z-50 border-b border-white/5">
+    <nav class="flex items-center justify-between px-5 py-3.5 sticky top-0 bg-[#060810]/95 backdrop-blur-md z-40 border-b border-white/5">
         <div class="flex items-center space-x-3">
-            <a href="index.html" class="w-10 h-10 bg-[#151821] border border-white/10 rounded-xl flex items-center justify-center text-white active:scale-95 transition-transform">
-                <i class="fa-solid fa-arrow-left text-gray-300"></i>
+            <a href="index.html" class="w-9 h-9 bg-[#121520] border border-white/10 rounded-xl flex items-center justify-center text-white active:scale-95 transition-transform">
+                <i class="fa-solid fa-arrow-left text-gray-300 text-sm"></i>
             </a>
-            <span class="text-2xl font-black tracking-tighter text-white">FF <span class="text-red-500">Diamonds</span></span>
+            <span class="text-xl font-black tracking-tight text-white">FF <span class="text-red-500">Diamonds</span></span>
         </div>
         <div class="w-8 h-8 rounded-full bg-red-500/10 border border-red-500/30 flex items-center justify-center">
-            <i class="fa-solid fa-gem text-red-500 text-sm"></i>
+            <i class="fa-solid fa-gem text-red-500 text-xs"></i>
         </div>
     </nav>
 
     <!-- UID Verification Input Box -->
-    <div class="px-5 mt-6">
+    <div class="px-4 mt-3 relative z-10">
         <div class="premium-dark-card" id="verifyBox">
-            <label class="block text-sm font-bold text-gray-200 mb-3 flex items-center justify-between">
+            <label class="block text-xs font-bold text-gray-200 mb-2 flex items-center justify-between">
                 <span>Enter Free Fire Player UID</span>
-                <span class="text-[11px] text-red-400 font-semibold">Instant Auto-Verification</span>
+                <span class="text-[10px] text-red-400 font-bold uppercase tracking-wider">Auto-Verification</span>
             </label>
-            <input type="number" id="playerUid" placeholder="Ex: 123456789" class="w-full p-4 input-dark placeholder-gray-500 text-lg font-bold" oninput="this.classList.remove('error-shake')">
-            <button onclick="verifyUid()" id="verifyBtn" class="w-full mt-4 p-4 btn-glow">
-                <div class="loader" id="confirmLoader"></div>
+            <input type="number" id="playerUid" placeholder="Ex: 123456789" class="w-full p-3 input-dark placeholder-gray-500 text-base font-bold text-center tracking-widest" oninput="this.classList.remove('error-shake')">
+            <button onclick="verifyUid()" id="verifyBtn" class="w-full mt-3 p-3 btn-glow text-sm">
+                <div class="btn-loader" id="confirmLoader"></div>
                 <span id="btnText" class="tracking-wide">Verify Player ID</span>
             </button>
         </div>
     </div>
 
-    <!-- Diamond Plans Section -->
-    <div class="px-5 mt-8 hidden" id="plansSection">
-        <div class="flex items-center space-x-3 mb-6">
-            <span class="w-1.5 h-6 bg-red-500 rounded-full inline-block"></span>
-            <h2 class="text-xl font-extrabold text-white tracking-wide">Select Diamond Pack</h2>
+    <!-- Diamond Plans Section (Visible after UID verification) -->
+    <div class="px-4 mt-4 hidden relative z-10" id="plansSection">
+
+        <!-- 1. Top Clickable Monthly Membership Banner -->
+        <div class="mb-4">
+            <div class="flex items-center space-x-2 mb-2">
+                <span class="w-1.5 h-4 bg-red-500 rounded-full inline-block shadow-[0_0_8px_#ef4444]"></span>
+                <h3 class="text-xs font-black text-gray-300 tracking-wider uppercase">VIP Offer (Click Banner To Claim)</h3>
+            </div>
+            <div onclick="buyMembership()" class="membership-banner-card active:scale-[0.98] transition-transform">
+                <img src="membership.png" alt="Free Fire Monthly Membership">
+            </div>
         </div>
 
-        <div class="space-y-4">
+        <!-- Section Header -->
+        <div class="flex items-center space-x-2.5 mb-3.5">
+            <span class="w-1.5 h-5 bg-red-500 rounded-full inline-block shadow-[0_0_8px_#ef4444]"></span>
+            <h2 class="text-base font-black text-white tracking-wider uppercase">Select Diamond Pack</h2>
+        </div>
 
-            <!-- 5000 Diamonds -->
-            <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
-                <div class="trending-badge">TRENDING</div>
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-extrabold text-xl text-white">5000 Diamonds</h3>
-                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
+        <!-- 2-Column Grid matching reference image layout -->
+        <div class="grid grid-cols-2 gap-3">
+
+            <!-- 1. Offer ₹149 (800 Diamonds) -->
+            <div class="cyber-pack-card neon-blue">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame">
+                        <img src="diamond.jpg" alt="FF Diamond">
                     </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-red-500">₹1000</span>
-                        <button onclick="buyNow(this, 'FF (5000 Diamonds)', 1000, 'Limited Edition Trending Pack, Instant 5k Credit')" class="block mt-2 px-6 py-2 btn-glow text-sm">
-                            <span>Buy Now</span>
-                        </button>
+                    <div>
+                        <h3 class="font-black text-white text-sm leading-tight">800 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-sky-400 leading-tight mt-0.5">₹149</p>
                     </div>
                 </div>
-            </div>
-            
-            <!-- 200 Diamonds -->
-            <div class="premium-dark-card border-glow-red">
-                <div class="flex justify-between items-start">
-                    <div>
-                        <h3 class="font-extrabold text-lg text-white">200 Diamonds <span class="text-[10px] bg-red-500/20 text-red-400 border border-red-500/30 px-2 py-0.5 rounded-full ml-1">POPULAR</span></h3>
-                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
-                    </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-red-500">₹90</span>
-                        <button onclick="buyNow(this, 'FF (200 Diamonds)', 90, 'Best For Event Completion, Instant delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">
-                            <span>Buy</span>
-                        </button>
-                    </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (800 Diamonds)', 149, 'Fast Starter Topup Pack')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
                 </div>
             </div>
 
-            <!-- 300 Diamonds -->
-            <div class="premium-dark-card border-glow-red">
-                <div class="flex justify-between items-start">
+            <!-- 2. Offer ₹299 (1650 Diamonds) -->
+            <div class="cyber-pack-card neon-red">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame border-red-500/30">
+                        <img src="diamond.jpg" alt="FF Diamond">
+                    </div>
                     <div>
-                        <h3 class="font-extrabold text-lg text-white">300 Diamonds</h3>
-                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-black text-white text-sm leading-tight">1650 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-red-500 leading-tight mt-0.5">₹299</p>
                     </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-red-500">₹120</span>
-                        <button onclick="buyNow(this, 'FF (300 Diamonds)', 120, 'Official Garena Topup, Instant Delivery')" class="block mt-2 px-6 py-2 btn-glow text-sm">
-                            <span>Buy</span>
-                        </button>
-                    </div>
+                </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (1650 Diamonds)', 299, 'Popular Diamond Bundle')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
                 </div>
             </div>
 
-            <!-- 560 Diamonds -->
-            <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
-                <div class="flex justify-between items-start">
+            <!-- 3. Offer ₹499 (2800 Diamonds) -->
+            <div class="cyber-pack-card neon-purple">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame border-fuchsia-500/30">
+                        <img src="diamond.jpg" alt="FF Diamond">
+                    </div>
                     <div>
-                        <h3 class="font-extrabold text-lg text-white">560 Diamonds <span class="text-[10px] bg-white text-black font-extrabold px-2 py-0.5 rounded-full ml-2">PROMO</span></h3>
-                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-black text-white text-sm leading-tight">2800 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-fuchsia-400 leading-tight mt-0.5">₹499</p>
                     </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-red-500">₹220</span>
-                        <button onclick="buyNow(this, 'FF (560 Diamonds)', 220, 'Instant Delivery, Best for Elite Pass')" class="block mt-2 px-6 py-2 btn-glow text-sm">
-                            <span>Buy</span>
-                        </button>
-                    </div>
+                </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (2800 Diamonds)', 499, 'Super Value Event Pack')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
                 </div>
             </div>
 
-            <!-- 1050 Diamonds -->
-            <div class="premium-dark-card border-glow-red">
-                <div class="flex justify-between items-start">
+            <!-- 4. Offer ₹799 (4500 Diamonds) -->
+            <div class="cyber-pack-card neon-orange">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame border-orange-500/30">
+                        <img src="diamond.jpg" alt="FF Diamond">
+                    </div>
                     <div>
-                        <h3 class="font-extrabold text-lg text-white">1050 Diamonds</h3>
-                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-black text-white text-sm leading-tight">4500 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-orange-400 leading-tight mt-0.5">₹799</p>
                     </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-red-500">₹300</span>
-                        <button onclick="buyNow(this, 'FF (1050 Diamonds)', 300, 'High Value Pack, Instant Credit')" class="block mt-2 px-6 py-2 btn-glow text-sm">
-                            <span>Buy</span>
-                        </button>
-                    </div>
+                </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (4500 Diamonds)', 799, 'Elite Pass Diamond Pack')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
                 </div>
             </div>
 
-            <!-- 1800 Diamonds -->
-            <div class="premium-dark-card border-glow-red">
-                <div class="flex justify-between items-start">
+            <!-- 5. Offer ₹999 (5700 Diamonds) -->
+            <div class="cyber-pack-card neon-blue">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame">
+                        <img src="diamond.jpg" alt="FF Diamond">
+                    </div>
                     <div>
-                        <h3 class="font-extrabold text-lg text-white">1800 Diamonds</h3>
-                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-black text-white text-sm leading-tight">5700 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-sky-400 leading-tight mt-0.5">₹999</p>
                     </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-red-500">₹399</span>
-                        <button onclick="buyNow(this, 'FF (1800 Diamonds)', 399, 'Mega Pack, Instant Delivery, Verified')" class="block mt-2 px-6 py-2 btn-glow text-sm">
-                            <span>Buy</span>
-                        </button>
-                    </div>
+                </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (5700 Diamonds)', 999, 'Pro Gaming Mega Topup')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
                 </div>
             </div>
 
-            <!-- Monthly Membership -->
-            <div class="premium-dark-card border-glow-red bg-gradient-to-r from-red-950/20 to-transparent">
-                <div class="flex justify-between items-start">
+            <!-- 6. Offer ₹1249 (7200 Diamonds) -->
+            <div class="cyber-pack-card neon-red">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame border-red-500/30">
+                        <img src="diamond.jpg" alt="FF Diamond">
+                    </div>
                     <div>
-                        <h3 class="font-extrabold text-lg text-white">Monthly Membership <span class="text-[10px] bg-red-600 text-white font-extrabold px-2 py-0.5 rounded-full ml-2">VIP</span></h3>
-                        <p class="text-xs text-gray-400 mt-1">Delivery: 0.001 Second Instantly</p>
+                        <h3 class="font-black text-white text-sm leading-tight">7200 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-red-500 leading-tight mt-0.5">₹1249</p>
                     </div>
-                    <div class="text-right">
-                        <span class="text-2xl font-black text-red-500">₹299</span>
-                        <button onclick="buyNow(this, 'FF Monthly Membership', 299, '30 Days Rewards, Instant VIP Badge, Fast Credit')" class="block mt-2 px-6 py-2 btn-glow text-sm">
-                            <span>Buy</span>
-                        </button>
+                </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (7200 Diamonds)', 1249, 'High Roller Diamond Chest')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 7. Offer ₹1499 (8800 Diamonds) -->
+            <div class="cyber-pack-card neon-purple">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame border-fuchsia-500/30">
+                        <img src="diamond.jpg" alt="FF Diamond">
                     </div>
+                    <div>
+                        <h3 class="font-black text-white text-sm leading-tight">8800 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-fuchsia-400 leading-tight mt-0.5">₹1499</p>
+                    </div>
+                </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (8800 Diamonds)', 1499, 'Tournament Ready Diamond Box')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- 8. Offer ₹1800 (10800 Diamonds) -->
+            <div class="cyber-pack-card neon-orange">
+                <div class="flex items-center space-x-2.5">
+                    <div class="diamond-icon-frame border-orange-500/30">
+                        <img src="diamond.jpg" alt="FF Diamond">
+                    </div>
+                    <div>
+                        <h3 class="font-black text-white text-sm leading-tight">10800 Dia</h3>
+                        <p class="text-[11px] font-extrabold text-orange-400 leading-tight mt-0.5">₹1800</p>
+                    </div>
+                </div>
+                <div>
+                    <button onclick="buyNow(this, 'FF (10800 Diamonds)', 1800, 'Ultimate Supreme Crate')" class="cyber-plan-btn">
+                        <span class="btn-text">Plans</span>
+                        <span class="btn-loader"></span>
+                    </button>
                 </div>
             </div>
 
@@ -300,35 +440,139 @@
     </div>
 
     <script>
+        // --- 1. LIVE CYBER NETWORK BACKGROUND ANIMATION ---
+        (function initLiveBg() {
+            const canvas = document.getElementById('liveBgCanvas');
+            const ctx = canvas.getContext('2d');
+            let w, h, particles = [];
+
+            function resize() {
+                w = canvas.width = window.innerWidth;
+                h = canvas.height = window.innerHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const particleCount = window.innerWidth < 640 ? 32 : 50;
+            for (let i = 0; i < particleCount; i++) {
+                particles.push({
+                    x: Math.random() * w,
+                    y: Math.random() * h,
+                    vx: (Math.random() - 0.5) * 0.45,
+                    vy: (Math.random() - 0.5) * 0.45,
+                    radius: Math.random() * 1.5 + 0.8,
+                    color: Math.random() > 0.5 ? 'rgba(0, 132, 255,' : 'rgba(239, 68, 68,'
+                });
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, w, h);
+
+                for (let i = 0; i < particles.length; i++) {
+                    for (let j = i + 1; j < particles.length; j++) {
+                        const dx = particles[i].x - particles[j].x;
+                        const dy = particles[i].y - particles[j].y;
+                        const dist = Math.sqrt(dx * dx + dy * dy);
+                        if (dist < 85) {
+                            ctx.beginPath();
+                            ctx.strokeStyle = `rgba(100, 149, 237, ${0.18 * (1 - dist / 85)})`;
+                            ctx.lineWidth = 0.6;
+                            ctx.moveTo(particles[i].x, particles[i].y);
+                            ctx.lineTo(particles[j].x, particles[j].y);
+                            ctx.stroke();
+                        }
+                    }
+                }
+
+                for (let i = 0; i < particles.length; i++) {
+                    const p = particles[i];
+                    p.x += p.vx;
+                    p.y += p.vy;
+
+                    if (p.x < 0) p.x = w;
+                    if (p.x > w) p.x = 0;
+                    if (p.y < 0) p.y = h;
+                    if (p.y > h) p.y = 0;
+
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color + '0.7)';
+                    ctx.shadowBlur = 8;
+                    ctx.shadowColor = p.color + '1)';
+                    ctx.fill();
+                    ctx.shadowBlur = 0;
+                }
+
+                requestAnimationFrame(animate);
+            }
+            animate();
+        })();
+
+        // --- 2. UID VERIFICATION & CHECKOUT LOGIC ---
         let isConfirmed = false;
+        let confirmedUid = "";
+
+        // Check if UID is already stored from other pages
+        window.addEventListener('DOMContentLoaded', () => {
+            const savedUid = localStorage.getItem('playerUid') || localStorage.getItem('ffUid');
+            if (savedUid && savedUid.length >= 8) {
+                document.getElementById('playerUid').value = savedUid;
+                verifyUid();
+            }
+        });
 
         function verifyUid() {
             const uidInput = document.getElementById('playerUid');
-            const uid = uidInput.value;
+            const uid = uidInput.value.trim();
             const loader = document.getElementById('confirmLoader');
             const btnText = document.getElementById('btnText');
             
             if (uid.length >= 8 && uid.length <= 12) {
                 loader.style.display = 'block';
-                btnText.innerText = "Verifying UID...";
+                btnText.innerText = "Verifying...";
                 
                 setTimeout(() => {
                     loader.style.display = 'none';
                     btnText.innerText = "Verified: " + uid;
                     document.getElementById('verifyBtn').style.background = "linear-gradient(135deg, #10b981 0%, #047857 100%)"; 
-                    document.getElementById('verifyBtn').style.boxShadow = "0 0 20px rgba(16, 185, 129, 0.6)";
+                    document.getElementById('verifyBtn').style.boxShadow = "0 0 18px rgba(16, 185, 129, 0.5)";
                     isConfirmed = true;
+                    confirmedUid = uid;
+                    
                     localStorage.setItem('ffUid', uid);
+                    localStorage.setItem('playerUid', uid);
                     
                     document.getElementById('plansSection').classList.remove('hidden');
                     document.getElementById('plansSection').scrollIntoView({ behavior: 'smooth' });
-                }, 1500);
+                }, 900);
             } else {
                 uidInput.classList.add('error-shake');
                 alert("Please enter a valid Player UID (8-12 digits).");
             }
         }
 
+        // Top Membership Banner Direct Checkout
+        function buyMembership() {
+            if(!isConfirmed) {
+                document.getElementById('verifyBox').scrollIntoView({behavior: 'smooth'});
+                document.getElementById('playerUid').classList.add('error-shake');
+                return;
+            }
+
+            const plan = "FF Monthly Membership";
+            const price = "299";
+            const benefits = "30 Days Daily Diamonds & Rewards, VIP Icon";
+
+            localStorage.setItem('selectedPlan', plan);
+            localStorage.setItem('selectedPrice', price);
+            localStorage.setItem('planBenefits', benefits);
+            localStorage.setItem('finalTarget', "UID: " + confirmedUid);
+            localStorage.setItem('deliveryTime', "0.001 Second Instantly");
+
+            window.location.href = `payment.html?bundle=${encodeURIComponent(plan)}&price=${price}&uid=${encodeURIComponent(confirmedUid)}`;
+        }
+
+        // Diamond Packs Checkout
         function buyNow(btn, plan, price, benefits) {
             if(!isConfirmed) {
                 document.getElementById('verifyBox').scrollIntoView({behavior: 'smooth'});
@@ -336,31 +580,32 @@
                 return;
             }
 
-            btn.innerHTML = `<div class="border-2 border-white border-t-transparent rounded-full w-4 h-4 animate-spin mr-2"></div> Processing...`;
+            const text = btn.querySelector('.btn-text');
+            const loader = btn.querySelector('.btn-loader');
+            if(text) text.style.display = 'none';
+            if(loader) loader.style.display = 'block';
             btn.style.pointerEvents = 'none';
 
             localStorage.setItem('selectedPlan', plan);
             localStorage.setItem('selectedPrice', price);
             localStorage.setItem('planBenefits', benefits);
-            localStorage.setItem('finalTarget', "UID: " + localStorage.getItem('ffUid'));
+            localStorage.setItem('finalTarget', "UID: " + confirmedUid);
             localStorage.setItem('deliveryTime', "0.001 Second Instantly");
 
             setTimeout(() => {
-                window.location.href = "payment.html";
-            }, 1500);
+                window.location.href = `payment.html?bundle=${encodeURIComponent(plan)}&price=${price}&uid=${encodeURIComponent(confirmedUid)}`;
+            }, 600);
         }
 
+        // Reset buttons if user navigates back
         window.addEventListener('pageshow', function () {
-            const buttons = document.querySelectorAll('.btn-glow');
-            buttons.forEach(b => {
-                if(b.innerText.includes('Processing')) {
-                    if(b.innerText.includes('999')) {
-                         b.innerHTML = '<span>Buy Now</span>';
-                    } else {
-                         b.innerHTML = '<span>Buy</span>';
-                    }
-                }
-                b.style.pointerEvents = 'auto';
+            const buttons = document.querySelectorAll('.cyber-plan-btn');
+            buttons.forEach(btn => {
+                const text = btn.querySelector('.btn-text');
+                const loader = btn.querySelector('.btn-loader');
+                if (text) text.style.display = 'block';
+                if (loader) loader.style.display = 'none';
+                btn.style.pointerEvents = 'auto';
             });
         });
     </script>
