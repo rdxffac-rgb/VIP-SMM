@@ -57,7 +57,7 @@
             background: #0c0e17;
             cursor: pointer;
             position: relative;
-            aspect-ratio: 2.1 / 1;
+            min-height: 130px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -71,92 +71,91 @@
         .membership-banner-card img {
             width: 100%;
             height: 100%;
-            object-fit: fill;
+            object-fit: cover;
             display: block;
         }
 
-        /* 2-Column Cyber Grid Cards matching image style */
+        /* Centered 3D Cyber Pack Cards */
         .cyber-pack-card {
-            background: rgba(12, 16, 26, 0.88);
+            background: rgba(12, 16, 26, 0.9);
             backdrop-filter: blur(12px);
-            border-radius: 18px;
-            padding: 13px 12px;
+            border-radius: 20px;
+            padding: 16px 12px 14px 12px;
             display: flex;
             flex-direction: column;
+            align-items: center;
             justify-content: space-between;
-            height: 154px;
+            min-height: 195px;
             position: relative;
-            transition: transform 0.2s ease;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
             z-index: 2;
+            text-align: center;
         }
 
         .cyber-pack-card:active {
             transform: scale(0.97);
         }
 
-        /* Card Neon Glow Borders */
+        /* Glowing Colored Neon Borders */
         .neon-blue {
             border: 1.6px solid #0084ff;
-            box-shadow: 0 0 15px rgba(0, 132, 255, 0.38), inset 0 0 8px rgba(0, 132, 255, 0.12);
+            box-shadow: 0 0 16px rgba(0, 132, 255, 0.35), inset 0 0 8px rgba(0, 132, 255, 0.1);
         }
 
         .neon-red {
             border: 1.6px solid #ef4444;
-            box-shadow: 0 0 15px rgba(239, 68, 68, 0.38), inset 0 0 8px rgba(239, 68, 68, 0.12);
+            box-shadow: 0 0 16px rgba(239, 68, 68, 0.35), inset 0 0 8px rgba(239, 68, 68, 0.1);
         }
 
         .neon-purple {
             border: 1.6px solid #d946ef;
-            box-shadow: 0 0 15px rgba(217, 70, 239, 0.38), inset 0 0 8px rgba(217, 70, 239, 0.12);
+            box-shadow: 0 0 16px rgba(217, 70, 239, 0.35), inset 0 0 8px rgba(217, 70, 239, 0.1);
         }
 
         .neon-orange {
             border: 1.6px solid #f97316;
-            box-shadow: 0 0 15px rgba(249, 115, 22, 0.38), inset 0 0 8px rgba(249, 115, 22, 0.12);
+            box-shadow: 0 0 16px rgba(249, 115, 22, 0.35), inset 0 0 8px rgba(249, 115, 22, 0.1);
+        }
+
+        /* Big Clear Diamond Logo Container */
+        .diamond-icon-frame {
+            width: 64px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 6px;
+        }
+
+        .diamond-icon-frame img {
+            max-width: 100%;
+            max-height: 100%;
+            object-fit: contain;
+            filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.5));
+            display: block;
         }
 
         /* Clean "Plans" Button */
         .cyber-plan-btn {
             background: rgba(3, 7, 18, 0.85);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            border-radius: 11px;
-            padding: 7px 0;
+            border-radius: 12px;
+            padding: 8px 0;
             color: #ffffff;
             font-weight: 700;
-            font-size: 0.85rem;
+            font-size: 0.88rem;
             display: flex;
             align-items: center;
             justify-content: center;
             cursor: pointer;
             width: 100%;
+            margin-top: 10px;
             transition: all 0.2s ease;
         }
 
         .cyber-plan-btn:active {
             transform: scale(0.96);
             background: rgba(255, 255, 255, 0.08);
-        }
-
-        /* Diamond Logo Box */
-        .diamond-icon-frame {
-            width: 42px;
-            height: 42px;
-            border-radius: 12px;
-            background: #090e18;
-            border: 1px solid rgba(56, 189, 248, 0.3);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            overflow: hidden;
-            box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
-            flex-shrink: 0;
-        }
-
-        .diamond-icon-frame img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
         }
 
         /* Verification Box Card */
@@ -261,7 +260,7 @@
         </div>
     </div>
 
-    <!-- Diamond Plans Section (Visible after UID verification) -->
+    <!-- Diamond Plans Section (Visible strictly AFTER verification) -->
     <div class="px-4 mt-4 hidden relative z-10" id="plansSection">
 
         <!-- 1. Top Clickable Monthly Membership Banner -->
@@ -271,7 +270,7 @@
                 <h3 class="text-xs font-black text-gray-300 tracking-wider uppercase">VIP Offer (Click Banner To Claim)</h3>
             </div>
             <div onclick="buyMembership()" class="membership-banner-card active:scale-[0.98] transition-transform">
-                <img src="membership.png" alt="Free Fire Monthly Membership">
+                <img src="membership.png" alt="Free Fire Monthly Membership" onerror="this.onerror=null; this.parentElement.innerHTML='<div class=\'p-4 text-center\'><h4 class=\'text-lg font-black text-white\'>Monthly Membership</h4><p class=\'text-xs text-gray-300 mt-1\'>30 Days Daily Rewards & VIP Badge</p><span class=\'inline-block mt-2 px-4 py-1.5 bg-red-600 rounded-lg text-xs font-bold text-white\'>Claim for ₹299</span></div>';">
             </div>
         </div>
 
@@ -281,159 +280,127 @@
             <h2 class="text-base font-black text-white tracking-wider uppercase">Select Diamond Pack</h2>
         </div>
 
-        <!-- 2-Column Grid matching reference image layout -->
+        <!-- 2-Column Grid (Centered Clean Layout) -->
         <div class="grid grid-cols-2 gap-3">
 
             <!-- 1. Offer ₹149 (800 Diamonds) -->
             <div class="cyber-pack-card neon-blue">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">800 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-sky-400 leading-tight mt-0.5">₹149</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (800 Diamonds)', 149, 'Fast Starter Topup Pack')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">800 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-sky-400 mt-1">₹149</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (800 Diamonds)', 149, 'Fast Starter Topup Pack')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
             <!-- 2. Offer ₹299 (1650 Diamonds) -->
             <div class="cyber-pack-card neon-red">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame border-red-500/30">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">1650 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-red-500 leading-tight mt-0.5">₹299</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (1650 Diamonds)', 299, 'Popular Diamond Bundle')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">1650 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-red-500 mt-1">₹299</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (1650 Diamonds)', 299, 'Popular Diamond Bundle')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
             <!-- 3. Offer ₹499 (2800 Diamonds) -->
             <div class="cyber-pack-card neon-purple">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame border-fuchsia-500/30">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">2800 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-fuchsia-400 leading-tight mt-0.5">₹499</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (2800 Diamonds)', 499, 'Super Value Event Pack')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">2800 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-fuchsia-400 mt-1">₹499</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (2800 Diamonds)', 499, 'Super Value Event Pack')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
             <!-- 4. Offer ₹799 (4500 Diamonds) -->
             <div class="cyber-pack-card neon-orange">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame border-orange-500/30">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">4500 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-orange-400 leading-tight mt-0.5">₹799</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (4500 Diamonds)', 799, 'Elite Pass Diamond Pack')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">4500 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-orange-400 mt-1">₹799</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (4500 Diamonds)', 799, 'Elite Pass Diamond Pack')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
             <!-- 5. Offer ₹999 (5700 Diamonds) -->
             <div class="cyber-pack-card neon-blue">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">5700 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-sky-400 leading-tight mt-0.5">₹999</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (5700 Diamonds)', 999, 'Pro Gaming Mega Topup')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">5700 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-sky-400 mt-1">₹999</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (5700 Diamonds)', 999, 'Pro Gaming Mega Topup')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
             <!-- 6. Offer ₹1249 (7200 Diamonds) -->
             <div class="cyber-pack-card neon-red">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame border-red-500/30">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">7200 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-red-500 leading-tight mt-0.5">₹1249</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (7200 Diamonds)', 1249, 'High Roller Diamond Chest')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">7200 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-red-500 mt-1">₹1249</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (7200 Diamonds)', 1249, 'High Roller Diamond Chest')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
             <!-- 7. Offer ₹1499 (8800 Diamonds) -->
             <div class="cyber-pack-card neon-purple">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame border-fuchsia-500/30">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">8800 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-fuchsia-400 leading-tight mt-0.5">₹1499</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (8800 Diamonds)', 1499, 'Tournament Ready Diamond Box')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">8800 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-fuchsia-400 mt-1">₹1499</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (8800 Diamonds)', 1499, 'Tournament Ready Diamond Box')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
             <!-- 8. Offer ₹1800 (10800 Diamonds) -->
             <div class="cyber-pack-card neon-orange">
-                <div class="flex items-center space-x-2.5">
-                    <div class="diamond-icon-frame border-orange-500/30">
-                        <img src="diamond.jpg" alt="FF Diamond">
-                    </div>
-                    <div>
-                        <h3 class="font-black text-white text-sm leading-tight">10800 Dia</h3>
-                        <p class="text-[11px] font-extrabold text-orange-400 leading-tight mt-0.5">₹1800</p>
-                    </div>
+                <div class="diamond-icon-frame">
+                    <img src="diamond.jpg" alt="Diamond" onerror="this.src='https://cdn-icons-png.flaticon.com/512/2618/2618245.png'">
                 </div>
                 <div>
-                    <button onclick="buyNow(this, 'FF (10800 Diamonds)', 1800, 'Ultimate Supreme Crate')" class="cyber-plan-btn">
-                        <span class="btn-text">Plans</span>
-                        <span class="btn-loader"></span>
-                    </button>
+                    <h3 class="font-extrabold text-white text-sm">10800 Diamonds 💎</h3>
+                    <p class="text-xs font-black text-orange-400 mt-1">₹1800</p>
                 </div>
+                <button onclick="buyNow(this, 'FF (10800 Diamonds)', 1800, 'Ultimate Supreme Crate')" class="cyber-plan-btn">
+                    <span class="btn-text">Plans</span>
+                    <span class="btn-loader"></span>
+                </button>
             </div>
 
         </div>
@@ -512,13 +479,13 @@
         let isConfirmed = false;
         let confirmedUid = "";
 
-        // Check if UID is already stored from other pages
+        // Reset state completely on page load / refresh
         window.addEventListener('DOMContentLoaded', () => {
-            const savedUid = localStorage.getItem('playerUid') || localStorage.getItem('ffUid');
-            if (savedUid && savedUid.length >= 8) {
-                document.getElementById('playerUid').value = savedUid;
-                verifyUid();
-            }
+            const uidInput = document.getElementById('playerUid');
+            if (uidInput) uidInput.value = '';
+            isConfirmed = false;
+            confirmedUid = "";
+            document.getElementById('plansSection').classList.add('hidden');
         });
 
         function verifyUid() {
