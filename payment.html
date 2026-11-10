@@ -170,16 +170,26 @@
                 txnElement.innerText = "TXN" + Math.floor(Math.random() * 9999999999);
             }
 
-            // URL query parameters (from bundle.html) check karein
+            // URL query parameters check karein
             const urlParams = new URLSearchParams(window.location.search);
             const urlBundle = urlParams.get('bundle');
             const urlPrice = urlParams.get('price');
             const urlUid = urlParams.get('uid');
 
-            // Agar URL me params hain to unhe prefer karein, varna localStorage se lein
-            const plan = urlBundle || localStorage.getItem('selectedPlan') || "Premium Service";
-            const price = urlPrice || localStorage.getItem('selectedPrice') || "0";
-            const target = urlUid ? ("UID: " + urlUid) : (localStorage.getItem('finalTarget') || "Verify ID");
+            // Fallback localStorage data
+            const storedUid = localStorage.getItem('playerUid') || localStorage.getItem('finalTarget');
+
+            // Final data extraction
+            const plan = urlBundle || localStorage.getItem('selectedPlan') || "3500 Diamonds";
+            const price = urlPrice || localStorage.getItem('selectedPrice') || "299";
+            
+            let target = "Verify ID";
+            if (urlUid) {
+                target = "UID: " + urlUid;
+            } else if (storedUid) {
+                target = storedUid.startsWith("UID:") ? storedUid : "UID: " + storedUid;
+            }
+
             const benefits = localStorage.getItem('planBenefits');
 
             if(document.getElementById('finalPlan')) document.getElementById('finalPlan').innerText = plan;
